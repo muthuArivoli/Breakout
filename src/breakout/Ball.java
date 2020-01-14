@@ -29,7 +29,7 @@ public class Ball {
         this.yVelocity = yVelocity;
     }
     public void resetLocation(){
-        myBallImage.setX(Game.LENGTH/2+Paddle.PADDLE_WIDTH/2);
+        myBallImage.setX(Game.LENGTH/2+Paddle.PADDLE_WIDTH/2-10);
         myBallImage.setY(Paddle.PADDLE_HEIGHT-20);
         xVelocity = Paddle.PADDLE_SPEED;
         coupled = true;
@@ -47,9 +47,11 @@ public class Ball {
         }
     }
     public void uncouple(){
-        coupled = false;
-        xVelocity = START_X_VELOCITY;
-        yVelocity = START_Y_VELOCITY;
+        if(coupled) {
+            coupled = false;
+            xVelocity = START_X_VELOCITY;
+            yVelocity = START_Y_VELOCITY;
+        }
     }
     public void moveCoupledLeft(){
         if(coupled){

@@ -3,7 +3,7 @@ package breakout;
 public class ScoreMultiplier {
     private int value;
     public ScoreMultiplier(int myScoreMultiplier){
-        this.value = value;
+        this.value = myScoreMultiplier;
     }
     public int getValue() {
         return this.value;

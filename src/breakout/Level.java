@@ -18,7 +18,7 @@ public class Level implements Screen{
     private List<Powerup> activePowerups = new ArrayList<>();
     private int myLevel;
     private ScoreMultiplier myScoreMultiplier = new ScoreMultiplier(1);
-
+    private Scorebar myScorebar;
     Level(Game myGame,String inputFile,int myLevel){
         this.myGame = myGame;
         this.inputFile = inputFile;
@@ -52,11 +52,15 @@ public class Level implements Screen{
         myPaddle = new Paddle(paddle_image);
         myPaddle.resetLocation();
         root.getChildren().add(paddle_image);
+
+        myScorebar = new Scorebar(root);
+        myScorebar.setMyDisplay(myGame.getScore(),myGame.getLives());
     }
 
     @Override
     public void update(double elapsedTime) {
         myBall.updateLocation(elapsedTime);
+        myScorebar.setMyDisplay(myGame.getScore(),myGame.getLives());
         for(Powerup p:allPowerups){
             p.updateLocation();
         }
@@ -69,7 +73,7 @@ public class Level implements Screen{
             if(myBlocks.get(i).getBlock().getBoundsInParent().intersects(myBall.getMyBallImage().getBoundsInParent())){
                 myBlocks.get(i).setHitsToBreak(myBlocks.get(i).getHitsToBreak()-1);
                 if(myBlocks.get(i).getHitsToBreak()==0) {
-                    myGame.setScore((myGame.getScore() + myBlocks.get(i).getScore())*myScoreMultiplier.getValue());
+                    myGame.setScore(myGame.getScore() + myBlocks.get(i).getScore()*myScoreMultiplier.getValue());
                     myBlocks.get(i).destroy(myGame.getRoot());
                     myBlocks.remove(i);
                 }
@@ -104,6 +108,7 @@ public class Level implements Screen{
                 i--;
             }
         }
+        myScorebar.setMyDisplay(myGame.getScore(),myGame.getLives());
         handleChangeLevel();
     }
 

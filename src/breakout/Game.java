@@ -19,19 +19,14 @@ public class Game extends Application {
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     public static final int NUM_LEVELS = 3;
     public static final Paint BACKGROUND = Color.AZURE;
-    public static final int PADDLE_SPEED = 20;
-    public static final int PADDLE_WIDTH = 50;
-    public static final int PADDLE_HEIGHT = 10;
     public static final String BALL_FILE = "ball.gif";
+    public static final String PADDLE_FILE = "paddle.gif";
+    public static final String REG_BRICK_FILE = "brick1.gif";
     private Scene myScene;
     private Group root = new Group();
-    private Screen beginScreen = new SplashScreen(this);
-    private Screen endScreen;
-    private Screen[] myLevels = new Screen[NUM_LEVELS];
     private Screen currScreen;
-    private GameState gameState = new GameState(0,3);
-
-
+    private int score;
+    private int lives;
 
     public static void main (String[] args){launch(args);}
 
@@ -40,15 +35,13 @@ public class Game extends Application {
      */
     @Override
     public void start (Stage stage) {
+        score=0;
+        lives=3;
         myScene = new Scene(root, WIDTH, LENGTH, BACKGROUND);
-        setCurrScreen(beginScreen);
-        for(int level = 0;level < NUM_LEVELS; level++){
-            myLevels[level] = new Level(this, "a.txt");
-        }
+        setCurrScreen(new SplashScreen(this));
         stage.setScene(myScene);
         stage.setTitle(TITLE);
         stage.show();
-
         // attach "game loop" to timeline to play it (basically just calling step() method repeatedly forever)
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
         Timeline animation = new Timeline();
@@ -63,24 +56,26 @@ public class Game extends Application {
 
     void setCurrScreen(Screen currScreen){
         this.currScreen = currScreen;
+        root.getChildren().clear();
         currScreen.initialize(root);
         myScene.setOnKeyPressed(e -> currScreen.handleKeyInput(e.getCode()));
     }
 
-    void setEndScreen(Screen endScreen){
-        this.endScreen = endScreen;
+    Screen getLevel(int level){
+        return new Level(this,"level_"+level+".txt", level);
     }
-
-    Screen[] getLevels(){
-        return myLevels;
+    public int getLives() {
+        return lives;
     }
-
-    Screen getEndScreen(){
-        return endScreen;
+    public int getScore() {
+        return score;
     }
-
-    GameState getGameState(){
-        return gameState;
+    public void setLives(int lives) {
+        this.lives = lives;
     }
+    public void setScore(int score) {
+        this.score = score;
+    }
+    public Group getRoot(){return this.root;}
 
 }

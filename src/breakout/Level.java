@@ -17,7 +17,7 @@ public class Level implements Screen{
     private List<Powerup> allPowerups = new ArrayList<>();
     private List<Powerup> activePowerups = new ArrayList<>();
     private int myLevel;
-    private int scoreMultiplier = 1;
+    private ScoreMultiplier myScoreMultiplier = new ScoreMultiplier(1);
 
     Level(Game myGame,String inputFile,int myLevel){
         this.myGame = myGame;
@@ -27,7 +27,6 @@ public class Level implements Screen{
 
     @Override
     public void initialize(Group root){
-        root.getChildren().clear();
         //read file, store blocks, store powerups
         int[][] ary = {{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1}};
         for(int i=0;i<ary.length;i++){
@@ -70,10 +69,9 @@ public class Level implements Screen{
             if(myBlocks.get(i).getBlock().getBoundsInParent().intersects(myBall.getMyBallImage().getBoundsInParent())){
                 myBlocks.get(i).setHitsToBreak(myBlocks.get(i).getHitsToBreak()-1);
                 if(myBlocks.get(i).getHitsToBreak()==0) {
-                    myGame.setScore((myGame.getScore() + myBlocks.get(i).getScore())*scoreMultiplier);
+                    myGame.setScore((myGame.getScore() + myBlocks.get(i).getScore())*myScoreMultiplier.getValue());
                     myBlocks.get(i).destroy(myGame.getRoot());
                     myBlocks.remove(i);
-                    i--;
                 }
                 myBall.setyVelocity(-1*myBall.getyVelocity());
                 break;
@@ -81,13 +79,15 @@ public class Level implements Screen{
         }
 
         //PADDLE and POWERUP
-        for(int i=0;i<allPowerups.size();i++){
+        for(int i=0;i<allPowerups.size();){
             if(allPowerups.get(i).getMyPowerUpImage().getBoundsInParent().intersects(myPaddle.getMyPaddleImage().getBoundsInParent())){
-                allPowerups.get(i).activatePowerup(this);
+                allPowerups.get(i).activatePowerup();
                 allPowerups.get(i).destroyImage(myGame.getRoot());
                 activePowerups.add(allPowerups.get(i));
                 allPowerups.remove(i);
-                i--;
+            }
+            else{
+                i++;
             }
         }
 
@@ -99,7 +99,7 @@ public class Level implements Screen{
         for(int i=0;i<activePowerups.size();i++){
             activePowerups.get(i).setTimeToExpire(activePowerups.get(i).getTimeToExpire() - elapsedTime);
             if(activePowerups.get(i).getTimeToExpire()<=0){
-                activePowerups.get(i).deactivatePowerup(this);
+                activePowerups.get(i).deactivatePowerup();
                 activePowerups.remove(i);
                 i--;
             }
@@ -155,21 +155,5 @@ public class Level implements Screen{
             myGame.setCurrScreen(myGame.getLevel(3));
         }
 
-    }
-
-    public Ball getMyBall(){
-        return myBall;
-    }
-
-    public Paddle getMyPaddle() {
-        return this.myPaddle;
-    }
-
-    public int getScoreMultiplier() {
-        return this.scoreMultiplier;
-    }
-
-    public void setScoreMultiplier(final int scoreMultiplier) {
-        this.scoreMultiplier = scoreMultiplier;
     }
 }

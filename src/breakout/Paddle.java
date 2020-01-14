@@ -1,7 +1,6 @@
 package breakout;
 
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
 
 public class Paddle {
     public static final int PADDLE_SPEED = 20;

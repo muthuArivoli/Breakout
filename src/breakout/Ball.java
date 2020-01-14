@@ -3,14 +3,17 @@ package breakout;
 import javafx.scene.image.ImageView;
 
 public class Ball {
+    public static final double START_X_VELOCITY=100;
+    public static final double START_Y_VELOCITY=-100;
+
     private double xVelocity;
     private double yVelocity;
-    private ImageView myBall;
+    private ImageView myBallImage;
+    private boolean coupled;
 
-    public Ball(ImageView myBall, int xVelocity,int yVelocity){
-        this.myBall = myBall;
-        this.xVelocity = xVelocity;
-        this.yVelocity = yVelocity;
+    public Ball(ImageView myBallImage){
+        this.myBallImage = myBallImage;
+        resetLocation();
     }
     public double getxVelocity() {
         return xVelocity;
@@ -25,23 +28,50 @@ public class Ball {
     public void setyVelocity(double yVelocity) {
         this.yVelocity = yVelocity;
     }
-    public void updateLocation(double elapsedTime){
-        if(!inXBounds()) {
-            this.xVelocity *= -1;
-        }
-        myBall.setX(myBall.getX() + this.xVelocity*elapsedTime);
-        if(!inYBounds()) {
-            this.yVelocity *= -1;
-        }
-        myBall.setY(myBall.getY() + this.yVelocity*elapsedTime);
+    public void resetLocation(){
+        myBallImage.setX(Game.LENGTH/2+Paddle.PADDLE_WIDTH/2);
+        myBallImage.setY(Paddle.PADDLE_HEIGHT-20);
+        xVelocity = Paddle.PADDLE_SPEED;
+        coupled = true;
     }
-
+    public void updateLocation(double elapsedTime){
+        if(!coupled) {
+            if (!inXBounds()) {
+                xVelocity *= -1;
+            }
+            myBallImage.setX(myBallImage.getX() + this.xVelocity * elapsedTime);
+            if (!inYBounds()) {
+                yVelocity *= -1;
+            }
+            myBallImage.setY(myBallImage.getY() + this.yVelocity * elapsedTime);
+        }
+    }
+    public void uncouple(){
+        coupled = false;
+        xVelocity = START_X_VELOCITY;
+        yVelocity = START_Y_VELOCITY;
+    }
+    public void moveCoupledLeft(){
+        if(coupled){
+            myBallImage.setX(myBallImage.getX() - xVelocity);
+        }
+    }
+    public void moveCoupledRight(){
+        if(coupled){
+            myBallImage.setX(myBallImage.getX() + xVelocity);
+        }
+    }
+    public boolean atBottom(){
+        return (myBallImage.getBoundsInParent().getMinY()>Paddle.PADDLE_HEIGHT);
+    }
     public boolean inXBounds(){
-        return (myBall.getBoundsInParent().getMinX()>0 && myBall.getBoundsInParent().getMaxX()<Game.LENGTH);
+        return (myBallImage.getBoundsInParent().getMinX()>0 && myBallImage.getBoundsInParent().getMaxX()<Game.LENGTH);
     }
     public boolean inYBounds(){
-        return (myBall.getBoundsInParent().getMinY()>0 && myBall.getBoundsInParent().getMaxY()<Game.WIDTH);
+        return (myBallImage.getBoundsInParent().getMinY()>0 && myBallImage.getBoundsInParent().getMaxY()<Game.WIDTH);
     }
 
-
+    public ImageView getMyBallImage() {
+        return this.myBallImage;
+    }
 }

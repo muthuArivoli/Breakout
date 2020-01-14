@@ -19,7 +19,6 @@ public class SplashScreen implements Screen {
 
     @Override
     public void initialize(Group root) {
-        root.getChildren().clear();
         myMover = new Rectangle(100, 100,100, 100);
         root.getChildren().add(myMover);
     }

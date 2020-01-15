@@ -4,7 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 
 public abstract class Powerup {
-    public static final int POWERUPVELOCITY = 25;
+    public static final int POWERUPVELOCITY = 3;
     public static final int POWERUPTIME = 6;
 
     private ImageView myPowerUpImage;
@@ -16,6 +16,7 @@ public abstract class Powerup {
     public void startMoving(Group root){
         root.getChildren().add(myPowerUpImage);
         velocity = POWERUPVELOCITY;
+        System.out.println(velocity);
     }
     public void updateLocation(){
         myPowerUpImage.setY(myPowerUpImage.getY()+velocity);

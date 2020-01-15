@@ -28,20 +28,7 @@ public class Level implements Screen{
     @Override
     public void initialize(Group root){
         //read file, store blocks, store powerups
-        int[][] ary = {{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1}};
-        for(int i=0;i<ary.length;i++){
-            for(int k=0;k<ary[0].length;k++){
-                if(ary[i][k]==1){
-                    ImageView myBlockPicture = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(Game.REG_BRICK_FILE)));
-                    myBlockPicture.setFitWidth(Game.WIDTH/ary[i].length-1);
-                    myBlockPicture.setFitHeight(19);
-                    myBlockPicture.setX(k*(Game.WIDTH/ary[i].length));
-                    myBlockPicture.setY(i*20+Game.LENGTH/2);
-                    myBlocks.add(new RegularBlock(myBlockPicture));
-                    root.getChildren().add(myBlockPicture);
-                }
-            }
-        }
+
         //create ball
         ImageView ball_image = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(Game.BALL_FILE)));
         myBall = new Ball(ball_image);
@@ -55,6 +42,28 @@ public class Level implements Screen{
 
         myScorebar = new Scorebar(root);
         myScorebar.setMyDisplay(myGame.getScore(),myGame.getLives());
+
+
+        int[][] ary = {{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1}};
+        for(int i=0;i<ary.length;i++){
+            for(int k=0;k<ary[0].length;k++){
+                if(ary[i][k]==1){
+                    ImageView myBlockPicture = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(Game.REG_BRICK_FILE)));
+                    myBlockPicture.setFitWidth(Game.WIDTH/ary[i].length-1);
+                    myBlockPicture.setFitHeight(19);
+                    myBlockPicture.setX(k*(Game.WIDTH/ary[i].length));
+                    myBlockPicture.setY(i*20+Game.LENGTH/2);
+                    ImageView myPowerupPicture=new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("laserpower.gif")));
+                    myPowerupPicture.setFitWidth((Game.WIDTH/ary[i].length-1)/2);
+                    myPowerupPicture.setFitHeight(19/2);
+                    myPowerupPicture.setX(k*(Game.WIDTH/ary[i].length));
+                    myPowerupPicture.setY(i*20+Game.LENGTH/2);
+                    allPowerups.add(new PaddleLengthPowerup(myPaddle,myPowerupPicture));
+                    myBlocks.add(new PowerupBlock(new RegularBlock(myBlockPicture),allPowerups.get(allPowerups.size()-1)));
+                    root.getChildren().add(myBlockPicture);
+                }
+            }
+        }
     }
 
     @Override
@@ -108,7 +117,6 @@ public class Level implements Screen{
                 i--;
             }
         }
-        myScorebar.setMyDisplay(myGame.getScore(),myGame.getLives());
         handleChangeLevel();
     }
 

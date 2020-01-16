@@ -27,40 +27,20 @@ public class Level implements Screen{
 
     @Override
     public void initialize(Group root){
-        //read file, store blocks, store powerups
-
-        //create ball
-        ImageView ball_image = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(Game.BALL_FILE)));
-        myBall = new Ball(ball_image);
-        myBall.resetLocation();
-        root.getChildren().add(ball_image);
-        //create paddle
-        ImageView paddle_image =new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(Game.PADDLE_FILE)));
-        myPaddle = new Paddle(paddle_image);
-        myPaddle.resetLocation();
-        root.getChildren().add(paddle_image);
-
+        myBall = new Ball(root);
+        myPaddle = new Paddle(root);
         myScorebar = new Scorebar(root);
-        myScorebar.setMyDisplay(myGame.getScore(),myGame.getLives());
-
-
         int[][] ary = {{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1}};
         for(int i=0;i<ary.length;i++){
             for(int k=0;k<ary[0].length;k++){
                 if(ary[i][k]==1){
-                    ImageView myBlockPicture = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(Game.REG_BRICK_FILE)));
-                    myBlockPicture.setFitWidth(Game.WIDTH/ary[i].length-1);
-                    myBlockPicture.setFitHeight(19);
-                    myBlockPicture.setX(k*(Game.WIDTH/ary[i].length));
-                    myBlockPicture.setY(i*20+Game.LENGTH/2);
-                    ImageView myPowerupPicture=new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream("laserpower.gif")));
-                    myPowerupPicture.setFitWidth((Game.WIDTH/ary[i].length-1)/2);
-                    myPowerupPicture.setFitHeight(19/2);
-                    myPowerupPicture.setX(k*(Game.WIDTH/ary[i].length));
-                    myPowerupPicture.setY(i*20+Game.LENGTH/2);
-                    allPowerups.add(new PaddleLengthPowerup(myPaddle,myPowerupPicture));
-                    myBlocks.add(new PowerupBlock(new RegularBlock(myBlockPicture),allPowerups.get(allPowerups.size()-1)));
-                    root.getChildren().add(myBlockPicture);
+                    int xpos = k * (Game.WIDTH / ary[i].length);
+                    int ypos = 20 * i + Game.LENGTH / 2;
+                    Powerup myNewPowerup = new PaddleLengthPowerup(xpos, ypos,ary[i].length,root,myPaddle);
+                    allPowerups.add(myNewPowerup);
+                    Block myNewRegularBlock = new RegularBlock(PowerupBlock.POWER_BRICK_FILE,xpos, ypos,ary[i].length,root);
+                    Block myNewBlock = new PowerupBlock(myNewRegularBlock,myNewPowerup);
+                    myBlocks.add(myNewBlock);
                 }
             }
         }

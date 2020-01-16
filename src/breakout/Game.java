@@ -19,9 +19,7 @@ public class Game extends Application {
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     public static final int NUM_LEVELS = 3;
     public static final Paint BACKGROUND = Color.AZURE;
-    public static final String BALL_FILE = "ball.gif";
-    public static final String PADDLE_FILE = "paddle.gif";
-    public static final String REG_BRICK_FILE = "brick1.gif";
+
     private Scene myScene;
     private Group root = new Group();
     private Screen currScreen;

@@ -1,6 +1,7 @@
 package breakout;
 
 import javafx.scene.Group;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public abstract class Powerup {
@@ -10,8 +11,12 @@ public abstract class Powerup {
     private ImageView myPowerUpImage;
     private double velocity;
     private double timeToExpire;
-    Powerup(ImageView myPowerUpImage){
-        this.myPowerUpImage = myPowerUpImage;
+    Powerup(String file_name,int xpos, int ypos,int width,Group root){
+        myPowerUpImage=new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(file_name)));
+        myPowerUpImage.setFitWidth((Game.WIDTH/width-1)/2);
+        myPowerUpImage.setFitHeight(19/2);
+        myPowerUpImage.setX(xpos);
+        myPowerUpImage.setY(ypos);
     }
     public void startMoving(Group root){
         root.getChildren().add(myPowerUpImage);
@@ -32,7 +37,6 @@ public abstract class Powerup {
     public void destroyImage(Group root){
         root.getChildren().remove(myPowerUpImage);
     }
-
     public ImageView getMyPowerUpImage() {
         return this.myPowerUpImage;
     }

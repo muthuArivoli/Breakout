@@ -1,18 +1,22 @@
 package breakout;
 
+import javafx.scene.Group;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class Ball {
     public static final double START_X_VELOCITY=100;
     public static final double START_Y_VELOCITY=-100;
+    public static final String BALL_FILE = "ball.gif";
 
     private double xVelocity;
     private double yVelocity;
     private ImageView myBallImage;
     private boolean coupled;
 
-    public Ball(ImageView myBallImage){
-        this.myBallImage = myBallImage;
+    public Ball(Group root){
+        myBallImage = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(BALL_FILE)));
+        root.getChildren().add(myBallImage);
         resetLocation();
     }
     public double getxVelocity() {
@@ -21,7 +25,6 @@ public class Ball {
     public double getyVelocity() {
         return yVelocity;
     }
-
     public void setxVelocity(double xVelocity) {
         this.xVelocity = xVelocity;
     }
@@ -55,12 +58,12 @@ public class Ball {
     }
     public void moveCoupledLeft(){
         if(coupled){
-            myBallImage.setX(myBallImage.getX() - xVelocity);
+            myBallImage.setX(myBallImage.getX() - Paddle.PADDLE_SPEED);
         }
     }
     public void moveCoupledRight(){
         if(coupled){
-            myBallImage.setX(myBallImage.getX() + xVelocity);
+            myBallImage.setX(myBallImage.getX() + Paddle.PADDLE_SPEED);
         }
     }
     public boolean atBottom(){
@@ -72,8 +75,7 @@ public class Ball {
     public boolean inYBounds(){
         return (myBallImage.getBoundsInParent().getMinY()>0 && myBallImage.getBoundsInParent().getMaxY()<Game.WIDTH);
     }
-
-    public ImageView getMyBallImage() {
-        return this.myBallImage;
+    public ImageView getMyBallImage(){
+        return myBallImage;
     }
 }

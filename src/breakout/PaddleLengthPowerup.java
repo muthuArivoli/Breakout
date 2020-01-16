@@ -1,13 +1,14 @@
 package breakout;
 
+import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 
 public class PaddleLengthPowerup extends Powerup{
     public static final double STRETCH_FACTOR = 1.4;
-
+    public static final String PADDLE_LENGTH_FILE = "sizepower.gif";
     private Paddle myPaddle;
-    public PaddleLengthPowerup(Paddle myPaddle,ImageView myPowerUpImage){
-        super(myPowerUpImage);
+    public PaddleLengthPowerup(int xpos, int ypos, int width, Group root,Paddle myPaddle){
+        super(PADDLE_LENGTH_FILE,xpos,ypos,width,root);
         this.myPaddle = myPaddle;
     }
     @Override

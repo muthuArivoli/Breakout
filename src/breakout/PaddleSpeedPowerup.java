@@ -1,7 +1,6 @@
 package breakout;
 
 import javafx.scene.Group;
-import javafx.scene.image.ImageView;
 
 public class PaddleSpeedPowerup extends Powerup{
     public static final String BALL_SPEED_FILE = "laserpower.gif";

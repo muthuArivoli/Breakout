@@ -1,8 +1,6 @@
 package breakout;
 
 import javafx.scene.Group;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 
 import java.util.ArrayList;
@@ -19,6 +17,7 @@ public class Level implements Screen{
     private int myLevel;
     private ScoreMultiplier myScoreMultiplier = new ScoreMultiplier(1);
     private Scorebar myScorebar;
+
     Level(Game myGame,String inputFile,int myLevel){
         this.myGame = myGame;
         this.inputFile = inputFile;
@@ -30,6 +29,8 @@ public class Level implements Screen{
         myBall = new Ball(root);
         myPaddle = new Paddle(root);
         myScorebar = new Scorebar(root);
+        /*TODO: Change code to read input from file instead of hardcode*/
+        /*TODO: Add factory class that will process input and create appropriate block*/
         int[][] ary = {{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1}};
         for(int i=0;i<ary.length;i++){
             for(int k=0;k<ary[0].length;k++){
@@ -48,16 +49,43 @@ public class Level implements Screen{
 
     @Override
     public void update(double elapsedTime) {
+        updateLocations(elapsedTime);
+        updateActivePowerups(elapsedTime);
+        updateScorebar();
+        handleBallPaddleCollision();
+        handleBallBrickCollision();
+        handlePaddlePowerupCollision();
+        handleBallDeath();
+        handleChangeLevel();
+    }
+
+    private void updateLocations(double elapsedTime){
         myBall.updateLocation(elapsedTime);
-        myScorebar.setMyDisplay(myGame.getScore(),myGame.getLives());
         for(Powerup p:allPowerups){
             p.updateLocation();
         }
-        //BALL and PADDLE
+    }
+    private void updateActivePowerups(double elapsedTime){
+        for(int i=0;i<activePowerups.size();i++){
+            activePowerups.get(i).setTimeToExpire(activePowerups.get(i).getTimeToExpire() - elapsedTime);
+            if(activePowerups.get(i).getTimeToExpire()<=0){
+                activePowerups.get(i).deactivatePowerup();
+                activePowerups.remove(i);
+                i--;
+            }
+        }
+    }
+    private void updateScorebar(){
+        myScorebar.setMyDisplay(myGame.getScore(),myGame.getLives());
+    }
+    private void handleBallPaddleCollision(){
+        /*TODO: Add different collision pattern depending on where ball strikes paddle*/
         if(myBall.getMyBallImage().getBoundsInParent().intersects(myPaddle.getMyPaddleImage().getBoundsInParent())){
             myBall.setyVelocity(-1*myBall.getyVelocity());
         }
-        //BALL and BRICK
+    }
+    private void handleBallBrickCollision(){
+        /*TODO: Handle case when ball strikes brick on side of brick*/
         for(int i=0;i<myBlocks.size();i++){
             if(myBlocks.get(i).getBlock().getBoundsInParent().intersects(myBall.getMyBallImage().getBoundsInParent())){
                 myBlocks.get(i).setHitsToBreak(myBlocks.get(i).getHitsToBreak()-1);
@@ -70,8 +98,8 @@ public class Level implements Screen{
                 break;
             }
         }
-
-        //PADDLE and POWERUP
+    }
+    private void handlePaddlePowerupCollision(){
         for(int i=0;i<allPowerups.size();){
             if(allPowerups.get(i).getMyPowerUpImage().getBoundsInParent().intersects(myPaddle.getMyPaddleImage().getBoundsInParent())){
                 allPowerups.get(i).activatePowerup();
@@ -83,21 +111,13 @@ public class Level implements Screen{
                 i++;
             }
         }
-
+    }
+    private void handleBallDeath(){
         if(myBall.atBottom()){
             myGame.setLives(myGame.getLives()-1);
             myPaddle.resetLocation();
             myBall.resetLocation();
         }
-        for(int i=0;i<activePowerups.size();i++){
-            activePowerups.get(i).setTimeToExpire(activePowerups.get(i).getTimeToExpire() - elapsedTime);
-            if(activePowerups.get(i).getTimeToExpire()<=0){
-                activePowerups.get(i).deactivatePowerup();
-                activePowerups.remove(i);
-                i--;
-            }
-        }
-        handleChangeLevel();
     }
 
     private void handleChangeLevel(){

@@ -4,6 +4,11 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * This provides the basic functionality for all powerups.
+ * Powerups are dropped from certain special bricks. A player catches the powerup with their paddle, and the powerup
+ * gives the player special abilities for a short amount of time. The ability depends on the type of the powerup.
+ */
 public abstract class Powerup {
     public static final int POWERUPVELOCITY = 3;
     public static final int POWERUPTIME = 6;

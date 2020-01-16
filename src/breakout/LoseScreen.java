@@ -3,7 +3,11 @@ package breakout;
 import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
 
+/*TODO: Need to implement LoseScreen*/
 
+/**
+ * This represents the screen that will be displayed when the player loses the game.
+ */
 public class LoseScreen implements Screen {
     @Override
     public void update(double elapsedTime) {

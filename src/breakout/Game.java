@@ -10,6 +10,9 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * The main driver code that initializes the game loop and sets the current screen in the game.
+ */
 public class Game extends Application {
     public static final String TITLE = "Breakout";
     public static final int WIDTH = 600;

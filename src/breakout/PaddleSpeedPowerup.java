@@ -2,6 +2,9 @@ package breakout;
 
 import javafx.scene.Group;
 
+/**
+ * This represents a powerup that increases the paddle speed for a short amount of time.
+ */
 public class PaddleSpeedPowerup extends Powerup{
     public static final String BALL_SPEED_FILE = "laserpower.gif";
     public static final double SPEED_FACTOR = 1.6;

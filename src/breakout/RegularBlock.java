@@ -4,6 +4,9 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * This represents the most common type of block that is worth 10 points and takes 1 hit to break.
+ */
 public class RegularBlock implements Block{
     public static final String REG_BRICK_FILE = "brick1.gif";
 

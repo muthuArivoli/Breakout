@@ -1,8 +1,10 @@
 package breakout;
 
 import javafx.scene.Group;
-import javafx.scene.image.ImageView;
 
+/**
+ * This represents a powerup that increases the length of the paddle for a short amount of time.
+ */
 public class PaddleLengthPowerup extends Powerup{
     public static final double STRETCH_FACTOR = 1.4;
     public static final String PADDLE_LENGTH_FILE = "sizepower.gif";

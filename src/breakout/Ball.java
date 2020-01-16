@@ -4,6 +4,9 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * This represents a ball in the game that the player will try to manipulate to break blocks.
+ */
 public class Ball {
     public static final double START_X_VELOCITY=100;
     public static final double START_Y_VELOCITY=-100;
@@ -49,6 +52,10 @@ public class Ball {
             myBallImage.setY(myBallImage.getY() + this.yVelocity * elapsedTime);
         }
     }
+
+    /**
+     * Remove coupling with paddle, and let it start moving on its own
+     */
     public void uncouple(){
         if(coupled) {
             coupled = false;
@@ -56,11 +63,19 @@ public class Ball {
             yVelocity = START_Y_VELOCITY;
         }
     }
+
+    /**
+     * Move left when initially attached to the paddle.
+     */
     public void moveCoupledLeft(){
         if(coupled){
             myBallImage.setX(myBallImage.getX() - Paddle.PADDLE_SPEED);
         }
     }
+
+    /**
+     * Move right when initially attached to paddle.
+     */
     public void moveCoupledRight(){
         if(coupled){
             myBallImage.setX(myBallImage.getX() + Paddle.PADDLE_SPEED);

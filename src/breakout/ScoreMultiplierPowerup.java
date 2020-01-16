@@ -2,6 +2,11 @@ package breakout;
 
 import javafx.scene.Group;
 
+
+/**
+ * This represents a powerup that will multiply any points that are gained by 2 for a short period of time after
+ * activation
+ */
 public class ScoreMultiplierPowerup extends Powerup {
     public static final String SCORE_MULTIPLIER_FILE = "pointspower.gif";
     private ScoreMultiplier myScoreMultiplier;

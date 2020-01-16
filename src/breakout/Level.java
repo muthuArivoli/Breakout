@@ -6,6 +6,9 @@ import javafx.scene.input.KeyCode;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This represents a level in the game. The level is read in from an input file and then handles all
+ */
 public class Level implements Screen{
     private Game myGame;
     private String inputFile;
@@ -59,12 +62,21 @@ public class Level implements Screen{
         handleChangeLevel();
     }
 
+    /**
+     * Update locations of the dynamic elements in the level (the ball and moving powerups)
+     * @param elapsedTime amount of time that has elapsed
+     */
     private void updateLocations(double elapsedTime){
         myBall.updateLocation(elapsedTime);
         for(Powerup p:allPowerups){
             p.updateLocation();
         }
     }
+
+    /**
+     *
+     * @param elapsedTime
+     */
     private void updateActivePowerups(double elapsedTime){
         for(int i=0;i<activePowerups.size();i++){
             activePowerups.get(i).setTimeToExpire(activePowerups.get(i).getTimeToExpire() - elapsedTime);

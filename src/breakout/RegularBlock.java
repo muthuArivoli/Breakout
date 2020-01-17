@@ -31,6 +31,18 @@ public class RegularBlock implements Block{
     public void setHitsToBreak(int hitsToBreak){
         this.hitsToBreak = hitsToBreak;
     }
+    public double getX() {
+        return myBlock.getBoundsInLocal().getMinX();
+    }
+    public double getY() {
+        return myBlock.getBoundsInLocal().getMinY();
+    }
+    public double getWidth() {
+        return myBlock.getBoundsInLocal().getMaxX() - getX();
+    }
+    public double getHeight() {
+        return myBlock.getBoundsInLocal().getMaxY() - getY();
+    }
     public Bounds getBounds(){
         return myBlock.getBoundsInParent();
     }

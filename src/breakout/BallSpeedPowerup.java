@@ -15,8 +15,8 @@ public class BallSpeedPowerup extends Powerup{
     }
     @Override
     public void activatePowerup() {
-        myBall.setxVelocity(BALL_SPEED_FACTOR/myBall.getxVelocity());
-        myBall.setyVelocity(BALL_SPEED_FACTOR/myBall.getyVelocity());
+        myBall.setxVelocity(myBall.getxVelocity()/BALL_SPEED_FACTOR);
+        myBall.setyVelocity(myBall.getyVelocity()/BALL_SPEED_FACTOR);
         setTimeToExpire(POWERUPTIME);
     }
 

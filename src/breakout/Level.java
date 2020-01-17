@@ -36,9 +36,6 @@ public class Level implements Screen{
         myPaddle = new Paddle(root);
         myScorebar = new Scorebar(root);
         try {
-            System.out.println(inputFile);
-            //Scanner br = new Scanner(inputFile);
-            //BufferedReader br = new BufferedInputStream()
             Scanner f = new Scanner(new File("resources/"+inputFile));
             int r,c;
             r = f.nextInt();
@@ -46,7 +43,6 @@ public class Level implements Screen{
             for(int i = 0;i < r;i++){
                 for(int k = 0;k < c; k++){
                     int in = f.nextInt();
-                    System.out.println(in);
                     int xpos = k * (Game.LENGTH / c);
                     int ypos = 20 * i + 80;
                     if(in>=4){
@@ -132,16 +128,20 @@ public class Level implements Screen{
         }
     }
     private void handleBallBrickCollision(){
-        /*TODO: Handle case when ball strikes brick on side of brick*/
         for(int i=0;i<myBlocks.size();i++){
             if(myBlocks.get(i).getBounds().intersects(myBall.getBounds())){
                 myBlocks.get(i).setHitsToBreak(myBlocks.get(i).getHitsToBreak()-1);
+                if(myBall.getX()+myBall.getWidth()>=myBlocks.get(i).getX() && myBall.getX()<=myBlocks.get(i).getX()+myBlocks.get(i).getWidth()) {
+                    myBall.setyVelocity(-1 * myBall.getyVelocity());
+                }
+                if(myBall.getY()>=myBlocks.get(i).getY()+myBlocks.get(i).getHeight() && myBall.getY()<=myBlocks.get(i).getY()) {
+                    myBall.setxVelocity(-1 * myBall.getxVelocity());
+                }
                 if(myBlocks.get(i).getHitsToBreak()==0) {
                     myGame.setScore(myGame.getScore() + myBlocks.get(i).getScore()*myScoreMultiplier.getValue());
                     myBlocks.get(i).destroy(myGame.getRoot());
                     myBlocks.remove(i);
                 }
-                myBall.setyVelocity(-1*myBall.getyVelocity());
                 break;
             }
         }

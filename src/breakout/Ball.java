@@ -32,6 +32,15 @@ public class Ball {
     public double getX(){
         return myBallImage.getX();
     }
+    public double getY(){
+        return myBallImage.getY();
+    }
+    public double getWidth(){
+        return myBallImage.getBoundsInLocal().getMaxX() - getX();
+    }
+    public double getHeight(){
+        return myBallImage.getBoundsInLocal().getMaxY() - getY();
+    }
     public void setxVelocity(double xVelocity) {
         this.xVelocity = xVelocity;
     }

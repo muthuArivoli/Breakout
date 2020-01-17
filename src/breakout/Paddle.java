@@ -20,7 +20,7 @@ public class Paddle {
         myPaddleImage = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(PADDLE_FILE)));
         myPaddleImage.setFitWidth(PADDLE_WIDTH);
         root.getChildren().add(myPaddleImage);
-        this.speed = PADDLE_SPEED;
+        speed = PADDLE_SPEED;
         resetLocation();
     }
     public void stretch(double factor){

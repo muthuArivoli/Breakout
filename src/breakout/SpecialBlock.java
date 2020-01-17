@@ -1,7 +1,7 @@
 package breakout;
 
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
-import javafx.scene.image.ImageView;
 
 /**
  * Represents the overall methods that any special block will have.
@@ -20,8 +20,8 @@ public abstract class SpecialBlock implements Block {
     public void setHitsToBreak(int hitsToBreak){
         myBlock.setHitsToBreak(hitsToBreak);
     }
-    public ImageView getBlock(){
-        return myBlock.getBlock();
+    public Bounds getBounds(){
+        return myBlock.getBounds();
     }
     public void destroy(Group root){
         myBlock.destroy(root);

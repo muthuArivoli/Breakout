@@ -3,12 +3,14 @@ package breakout;
 import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * This represents a level in the game. The level is read in from an input file and then handles all interactions
- * between objects present in the game.
+ * between objects present in the level.
  */
 public class Level implements Screen{
     private Game myGame;
@@ -29,25 +31,52 @@ public class Level implements Screen{
     }
 
     @Override
-    public void initialize(Group root){
+    public void initialize(Group root) {
         myBall = new Ball(root);
         myPaddle = new Paddle(root);
         myScorebar = new Scorebar(root);
-        /*TODO: Change code to read input from file instead of hardcode*/
-        /*TODO: Add factory class that will process input and create appropriate block*/
-        int[][] ary = {{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1,1}};
-        for(int i=0;i<ary.length;i++){
-            for(int k=0;k<ary[0].length;k++){
-                if(ary[i][k]==1){
-                    int xpos = k * (Game.WIDTH / ary[i].length);
+        try {
+            System.out.println(inputFile);
+            //Scanner br = new Scanner(inputFile);
+            //BufferedReader br = new BufferedInputStream()
+            Scanner f = new Scanner(new File("resources/"+inputFile));
+            int r,c;
+            r = f.nextInt();
+            c = f.nextInt();
+            for(int i = 0;i < r;i++){
+                for(int k = 0;k < c; k++){
+                    int in = f.nextInt();
+                    System.out.println(in);
+                    int xpos = k * (Game.WIDTH / c);
                     int ypos = 20 * i + Game.LENGTH / 2;
-                    Powerup myNewPowerup = new PaddleLengthPowerup(xpos, ypos,ary[i].length,root,myPaddle);
-                    allPowerups.add(myNewPowerup);
-                    Block myNewRegularBlock = new RegularBlock(PowerupBlock.POWER_BRICK_FILE,xpos, ypos,ary[i].length,root);
-                    Block myNewBlock = new PowerupBlock(myNewRegularBlock,myNewPowerup);
-                    myBlocks.add(myNewBlock);
+                    if(in>=4){
+                        Powerup newPowerup = createPowerup(in,xpos,ypos,c,root);
+                        allPowerups.add(newPowerup);
+                        myBlocks.add(BlockCreator.createBlock(in,xpos,ypos,c,root,newPowerup));
+                    }
+                    else {
+                        myBlocks.add(BlockCreator.createBlock(in, xpos, ypos, c, root));
+                    }
                 }
             }
+            f.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Powerup createPowerup(int in, int xpos, int ypos, int width, Group root){
+        if(in==4){
+            return new PaddleLengthPowerup(xpos,ypos,width,root,myPaddle);
+        }
+        else if(in==5){
+            return new PaddleSpeedPowerup(xpos,ypos,width,root,myPaddle);
+        }
+        else if(in==6){
+            return new BallSpeedPowerup(xpos,ypos,width,root,myBall);
+        }
+        else{
+            return new ScoreMultiplierPowerup(xpos,ypos,width,root,myScoreMultiplier);
         }
     }
 
@@ -75,8 +104,8 @@ public class Level implements Screen{
     }
 
     /**
-     *
-     * @param elapsedTime
+     * Updates time that each active powerup still has
+     * @param elapsedTime amount of time that has elapsed
      */
     private void updateActivePowerups(double elapsedTime){
         for(int i=0;i<activePowerups.size();i++){
@@ -93,14 +122,14 @@ public class Level implements Screen{
     }
     private void handleBallPaddleCollision(){
         /*TODO: Add different collision pattern depending on where ball strikes paddle*/
-        if(myBall.getMyBallImage().getBoundsInParent().intersects(myPaddle.getMyPaddleImage().getBoundsInParent())){
+        if(myBall.getBounds().intersects(myPaddle.getBounds())){
             myBall.setyVelocity(-1*myBall.getyVelocity());
         }
     }
     private void handleBallBrickCollision(){
         /*TODO: Handle case when ball strikes brick on side of brick*/
         for(int i=0;i<myBlocks.size();i++){
-            if(myBlocks.get(i).getBlock().getBoundsInParent().intersects(myBall.getMyBallImage().getBoundsInParent())){
+            if(myBlocks.get(i).getBounds().intersects(myBall.getBounds())){
                 myBlocks.get(i).setHitsToBreak(myBlocks.get(i).getHitsToBreak()-1);
                 if(myBlocks.get(i).getHitsToBreak()==0) {
                     myGame.setScore(myGame.getScore() + myBlocks.get(i).getScore()*myScoreMultiplier.getValue());
@@ -114,7 +143,7 @@ public class Level implements Screen{
     }
     private void handlePaddlePowerupCollision(){
         for(int i=0;i<allPowerups.size();){
-            if(allPowerups.get(i).getMyPowerUpImage().getBoundsInParent().intersects(myPaddle.getMyPaddleImage().getBoundsInParent())){
+            if(allPowerups.get(i).getBounds().intersects(myPaddle.getBounds())){
                 allPowerups.get(i).activatePowerup();
                 allPowerups.get(i).destroyImage(myGame.getRoot());
                 activePowerups.add(allPowerups.get(i));
@@ -132,7 +161,6 @@ public class Level implements Screen{
             myBall.resetLocation();
         }
     }
-
     private void handleChangeLevel(){
         if(myBlocks.isEmpty()){
             if(myLevel != Game.NUM_LEVELS) {

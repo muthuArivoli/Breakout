@@ -1,5 +1,6 @@
 package breakout;
 
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -38,8 +39,8 @@ public class Paddle {
         return speed;
     }
 
-    public ImageView getMyPaddleImage() {
-        return this.myPaddleImage;
+    public Bounds getBounds() {
+        return myPaddleImage.getBoundsInParent();
     }
 
     public void resetLocation(){

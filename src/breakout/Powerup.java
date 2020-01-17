@@ -1,5 +1,6 @@
 package breakout;
 
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -42,7 +43,7 @@ public abstract class Powerup {
     public void destroyImage(Group root){
         root.getChildren().remove(myPowerUpImage);
     }
-    public ImageView getMyPowerUpImage() {
-        return this.myPowerUpImage;
+    public Bounds getBounds() {
+        return myPowerUpImage.getBoundsInParent();
     }
 }

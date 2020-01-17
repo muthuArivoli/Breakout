@@ -1,7 +1,7 @@
 package breakout;
 
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
-import javafx.scene.image.ImageView;
 
 /**
  * Interface for blocks that can be broken to earn points.
@@ -10,6 +10,6 @@ public interface Block {
     int getScore();
     int getHitsToBreak();
     void setHitsToBreak(int hitsToBreak);
-    ImageView getBlock();
+    Bounds getBounds();
     void destroy(Group root);
 }

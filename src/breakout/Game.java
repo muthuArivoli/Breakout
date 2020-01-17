@@ -63,7 +63,7 @@ public class Game extends Application {
     }
 
     Screen getLevel(int level){
-        return new Level(this,"level_"+level+".txt", level);
+        return new Level(this,"level"+level+".txt", level);
     }
     public int getLives() {
         return lives;

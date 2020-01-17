@@ -1,5 +1,6 @@
 package breakout;
 
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,8 +31,8 @@ public class RegularBlock implements Block{
     public void setHitsToBreak(int hitsToBreak){
         this.hitsToBreak = hitsToBreak;
     }
-    public ImageView getBlock(){
-        return myBlock;
+    public Bounds getBounds(){
+        return myBlock.getBoundsInParent();
     }
     public void destroy(Group root){
         root.getChildren().remove(myBlock);

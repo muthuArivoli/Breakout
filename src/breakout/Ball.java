@@ -1,5 +1,6 @@
 package breakout;
 
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -90,7 +91,7 @@ public class Ball {
     public boolean inYBounds(){
         return (myBallImage.getBoundsInParent().getMinY()>0 && myBallImage.getBoundsInParent().getMaxY()<Game.WIDTH);
     }
-    public ImageView getMyBallImage(){
-        return myBallImage;
+    public Bounds getBounds(){
+        return myBallImage.getBoundsInParent();
     }
 }

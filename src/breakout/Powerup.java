@@ -19,7 +19,7 @@ public abstract class Powerup {
     private double timeToExpire;
     Powerup(String file_name,int xpos, int ypos,int width,Group root){
         myPowerUpImage=new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(file_name)));
-        myPowerUpImage.setFitWidth((Game.WIDTH/width-1)/2);
+        myPowerUpImage.setFitWidth((Game.LENGTH /width-1)/2);
         myPowerUpImage.setFitHeight(19/2);
         myPowerUpImage.setX(xpos);
         myPowerUpImage.setY(ypos);

@@ -9,8 +9,8 @@ import javafx.scene.image.ImageView;
  * This represents a ball in the game that the player will try to manipulate to break blocks.
  */
 public class Ball {
-    public static final double START_X_VELOCITY=100;
-    public static final double START_Y_VELOCITY=-100;
+    public static final double START_X_VELOCITY=250;
+    public static final double START_Y_VELOCITY=-300;
     public static final String BALL_FILE = "ball.gif";
 
     private double xVelocity;
@@ -29,6 +29,9 @@ public class Ball {
     public double getyVelocity() {
         return yVelocity;
     }
+    public double getX(){
+        return myBallImage.getX();
+    }
     public void setxVelocity(double xVelocity) {
         this.xVelocity = xVelocity;
     }
@@ -36,7 +39,7 @@ public class Ball {
         this.yVelocity = yVelocity;
     }
     public void resetLocation(){
-        myBallImage.setX(Game.LENGTH/2+Paddle.PADDLE_WIDTH/2-10);
+        myBallImage.setX(Game.LENGTH /2+Paddle.PADDLE_WIDTH/2-10);
         myBallImage.setY(Paddle.PADDLE_HEIGHT-20);
         xVelocity = Paddle.PADDLE_SPEED;
         coupled = true;
@@ -71,6 +74,9 @@ public class Ball {
     public void moveCoupledLeft(){
         if(coupled){
             myBallImage.setX(myBallImage.getX() - Paddle.PADDLE_SPEED);
+            if(!inXBounds()) {
+                moveCoupledRight();
+            }
         }
     }
 
@@ -80,6 +86,9 @@ public class Ball {
     public void moveCoupledRight(){
         if(coupled){
             myBallImage.setX(myBallImage.getX() + Paddle.PADDLE_SPEED);
+            if(!inXBounds()) {
+                moveCoupledLeft();
+            }
         }
     }
     public boolean atBottom(){
@@ -89,7 +98,7 @@ public class Ball {
         return (myBallImage.getBoundsInParent().getMinX()>0 && myBallImage.getBoundsInParent().getMaxX()<Game.LENGTH);
     }
     public boolean inYBounds(){
-        return (myBallImage.getBoundsInParent().getMinY()>0 && myBallImage.getBoundsInParent().getMaxY()<Game.WIDTH);
+        return (myBallImage.getBoundsInParent().getMinY()>0 && myBallImage.getBoundsInParent().getMaxY()<Game.LENGTH);
     }
     public Bounds getBounds(){
         return myBallImage.getBoundsInParent();

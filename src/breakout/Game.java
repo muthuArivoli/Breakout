@@ -15,7 +15,7 @@ import javafx.util.Duration;
  */
 public class Game extends Application {
     public static final String TITLE = "Breakout";
-    public static final int WIDTH = 600;
+    public static final int WIDTH = 800;
     public static final int LENGTH = 600;
     public static final int FRAMES_PER_SECOND = 60;
     public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
@@ -38,7 +38,7 @@ public class Game extends Application {
     public void start (Stage stage) {
         score=0;
         lives=3;
-        myScene = new Scene(root, WIDTH, LENGTH, BACKGROUND);
+        myScene = new Scene(root, LENGTH, LENGTH, BACKGROUND);
         setCurrScreen(new SplashScreen(this));
         stage.setScene(myScene);
         stage.setTitle(TITLE);

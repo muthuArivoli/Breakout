@@ -47,8 +47,8 @@ public class Level implements Screen{
                 for(int k = 0;k < c; k++){
                     int in = f.nextInt();
                     System.out.println(in);
-                    int xpos = k * (Game.WIDTH / c);
-                    int ypos = 20 * i + Game.LENGTH / 2;
+                    int xpos = k * (Game.LENGTH / c);
+                    int ypos = 20 * i + 80;
                     if(in>=4){
                         Powerup newPowerup = createPowerup(in,xpos,ypos,c,root);
                         allPowerups.add(newPowerup);
@@ -121,9 +121,14 @@ public class Level implements Screen{
         myScorebar.setMyDisplay(myGame.getScore(),myGame.getLives());
     }
     private void handleBallPaddleCollision(){
-        /*TODO: Add different collision pattern depending on where ball strikes paddle*/
         if(myBall.getBounds().intersects(myPaddle.getBounds())){
             myBall.setyVelocity(-1*myBall.getyVelocity());
+            if(myBall.getX()<myPaddle.getX()+Paddle.PADDLE_WIDTH/3 && myBall.getxVelocity()>0){
+                myBall.setxVelocity(-1*myBall.getxVelocity());
+            }
+            else if(myBall.getX()>myPaddle.getX()+2*Paddle.PADDLE_WIDTH/3 && myBall.getxVelocity()<0){
+                myBall.setxVelocity(-1*myBall.getxVelocity());
+            }
         }
     }
     private void handleBallBrickCollision(){

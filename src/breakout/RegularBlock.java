@@ -15,7 +15,7 @@ public class RegularBlock implements Block{
     private int hitsToBreak;
     public RegularBlock(String file_name,int xpos, int ypos,int width,Group root){
         myBlock = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(file_name)));
-        myBlock.setFitWidth(Game.WIDTH/width-1);
+        myBlock.setFitWidth(Game.LENGTH /width-1);
         myBlock.setFitHeight(19);
         myBlock.setX(xpos);
         myBlock.setY(ypos);

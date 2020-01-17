@@ -11,7 +11,7 @@ public class BlockCreator {
             return new HitsBlock(new RegularBlock(HitsBlock.HITS_BLOCK_FILE,xpos, ypos,c,root));
         }
         else {
-            return new PointsBlock(new RegularBlock(HitsBlock.HITS_BLOCK_FILE, xpos, ypos, c, root));
+            return new PointsBlock(new RegularBlock(PointsBlock.POINTS_BLOCK_FILE, xpos, ypos, c, root));
         }
     }
     public static Block createBlock(int in, int xpos, int ypos, int c, Group root, Powerup myPowerup) {

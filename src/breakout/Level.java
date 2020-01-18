@@ -16,7 +16,7 @@ public class Level implements Screen{
     private Game myGame;
     private String inputFile;
     private Paddle myPaddle;
-    private List<Block> myBlocks= new ArrayList<>();
+    private List<Brick> myBricks = new ArrayList<>();
     private List<Powerup> allPowerups = new ArrayList<>();
     private List<Powerup> activePowerups = new ArrayList<>();
     private List<Ball> myBalls = new ArrayList<>();
@@ -24,7 +24,7 @@ public class Level implements Screen{
     private ScoreMultiplier myScoreMultiplier = new ScoreMultiplier(1);
     private Scorebar myScorebar;
 
-    Level(Game myGame,String inputFile,int myLevel){
+    public Level(Game myGame,String inputFile,int myLevel){
         this.myGame = myGame;
         this.inputFile = inputFile;
         this.myLevel = myLevel;
@@ -49,15 +49,15 @@ public class Level implements Screen{
                     if(in==4){
                         Powerup newPowerup = createPowerup(in,xpos,ypos,c);
                         allPowerups.add(newPowerup);
-                        myBlocks.add(BlockCreator.createBlock(in,xpos,ypos,c,root,newPowerup));
+                        myBricks.add(BlockCreator.createBlock(in,xpos,ypos,c,root,newPowerup));
                     }
                     else if(in==5){
                         Ball myNewSecondaryBall = new Ball();
                         myBalls.add(myNewSecondaryBall);
-                        myBlocks.add(BlockCreator.createBlock(in,xpos,ypos,c,root,myNewSecondaryBall));
+                        myBricks.add(BlockCreator.createBlock(in,xpos,ypos,c,root,myNewSecondaryBall));
                     }
                     else if (in!=0){
-                        myBlocks.add(BlockCreator.createBlock(in, xpos, ypos, c, root));
+                        myBricks.add(BlockCreator.createBlock(in, xpos, ypos, c, root));
                     }
                 }
             }
@@ -139,19 +139,19 @@ public class Level implements Screen{
     private void handleBallBrickCollision(){
         for(Ball myBall:myBalls) {
             if (myBall.isInPlay()) {
-                for (int i = 0; i < myBlocks.size(); i++) {
-                    if (myBlocks.get(i).getMyBlockImage().getBounds().intersects(myBall.getMyBallImage().getBounds())) {
-                        myBlocks.get(i).setHitsToBreak(myBlocks.get(i).getHitsToBreak() - 1);
-                        if (myBall.getMyBallImage().getX() + myBall.getMyBallImage().getWidth() >= myBlocks.get(i).getMyBlockImage().getX() && myBall.getMyBallImage().getX() <= myBlocks.get(i).getMyBlockImage().getX() + myBlocks.get(i).getMyBlockImage().getWidth()) {
+                for (int i = 0; i < myBricks.size(); i++) {
+                    if (myBricks.get(i).getMyBrickImage().getBounds().intersects(myBall.getMyBallImage().getBounds())) {
+                        myBricks.get(i).setHitsToBreak(myBricks.get(i).getHitsToBreak() - 1);
+                        if (myBall.getMyBallImage().getX() + myBall.getMyBallImage().getWidth() >= myBricks.get(i).getMyBrickImage().getX() && myBall.getMyBallImage().getX() <= myBricks.get(i).getMyBrickImage().getX() + myBricks.get(i).getMyBrickImage().getWidth()) {
                             myBall.setyVelocity(-1 * myBall.getyVelocity());
                         }
-                        if (myBall.getMyBallImage().getY() >= myBlocks.get(i).getMyBlockImage().getY() + myBlocks.get(i).getMyBlockImage().getHeight() && myBall.getMyBallImage().getY() <= myBlocks.get(i).getMyBlockImage().getY()) {
+                        if (myBall.getMyBallImage().getY() >= myBricks.get(i).getMyBrickImage().getY() + myBricks.get(i).getMyBrickImage().getHeight() && myBall.getMyBallImage().getY() <= myBricks.get(i).getMyBrickImage().getY()) {
                             myBall.setxVelocity(-1 * myBall.getxVelocity());
                         }
-                        if (myBlocks.get(i).getHitsToBreak() == 0) {
-                            myGame.setScore(myGame.getScore() + myBlocks.get(i).getScore() * myScoreMultiplier.getValue());
-                            myBlocks.get(i).destroy(myGame.getRoot());
-                            myBlocks.remove(i);
+                        if (myBricks.get(i).getHitsToBreak() == 0) {
+                            myGame.setScore(myGame.getScore() + myBricks.get(i).getScore() * myScoreMultiplier.getValue());
+                            myBricks.get(i).destroy(myGame.getRoot());
+                            myBricks.remove(i);
                         }
                         break;
                     }
@@ -191,7 +191,7 @@ public class Level implements Screen{
         }
     }
     private void handleChangeLevel(){
-        if(myBlocks.isEmpty()){
+        if(myBricks.isEmpty()){
             if(myLevel != Game.NUM_LEVELS) {
                 myGame.setCurrScreen(myGame.getLevel(myLevel+1));
             }
@@ -225,8 +225,8 @@ public class Level implements Screen{
             myPaddle.resetLocation();
         }
         else if (code == KeyCode.T){
-            myBlocks.get(0).destroy(myGame.getRoot());
-            myBlocks.remove(0);
+            myBricks.get(0).destroy(myGame.getRoot());
+            myBricks.remove(0);
         }
         else if (code == KeyCode.DIGIT1){
             myGame.setCurrScreen(myGame.getLevel(1));

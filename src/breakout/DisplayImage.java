@@ -5,10 +5,12 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.Objects;
+
 public class DisplayImage {
     ImageView myImage;
     public DisplayImage(String fileName){
-        myImage = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(fileName)));
+        myImage = new ImageView(new Image(Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream(fileName))));
     }
     public void addImage(Group root){
         root.getChildren().add(myImage);

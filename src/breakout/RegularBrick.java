@@ -5,12 +5,12 @@ import javafx.scene.Group;
 /**
  * This represents the most common type of block that is worth 10 points and takes 1 hit to break.
  */
-public class RegularBlock implements Block{
+public class RegularBrick implements Brick {
     public static final String REG_BRICK_FILE = "brick1.gif";
 
     private DisplayImage myBlockImage;
     private int hitsToBreak;
-    public RegularBlock(String file_name,double xpos, double ypos,double width,Group root){
+    public RegularBrick(String file_name, double xpos, double ypos, double width, Group root){
         myBlockImage = new DisplayImage(file_name);
         myBlockImage.setFitWidth(Game.LENGTH /width-1);
         myBlockImage.setFitHeight(19);
@@ -31,7 +31,7 @@ public class RegularBlock implements Block{
     public void destroy(Group root){
         myBlockImage.destroyImage(root);
     }
-    public DisplayImage getMyBlockImage(){
+    public DisplayImage getMyBrickImage(){
         return myBlockImage;
     }
 }

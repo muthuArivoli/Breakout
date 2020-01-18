@@ -5,12 +5,12 @@ import javafx.scene.Group;
 /**
  * This represents a special block that contains a powerup that is hidden inside and released once the block is broken.
  */
-public class PowerupBlock extends SpecialBlock{
+public class PowerupBrick extends SpecialBrick {
     public static final String POWER_BRICK_FILE = "brick4.gif";
 
     private Powerup myPowerup;
-    public PowerupBlock(Block myBlock,Powerup myPowerup){
-        super(myBlock);
+    public PowerupBrick(Brick myBrick, Powerup myPowerup){
+        super(myBrick);
         this.myPowerup = myPowerup;
     }
 

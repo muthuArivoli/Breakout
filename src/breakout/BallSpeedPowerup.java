@@ -10,7 +10,7 @@ public class BallSpeedPowerup extends Powerup{
     public static final String BALL_SPEED_FILE = "extraballpower.gif";
     private Ball myBall;
     public BallSpeedPowerup(int xpos, int ypos, int width, Group root, Ball myBall){
-        super(BALL_SPEED_FILE,xpos,ypos,width,root);
+        super(BALL_SPEED_FILE,xpos,ypos,width);
         this.myBall = myBall;
     }
     @Override

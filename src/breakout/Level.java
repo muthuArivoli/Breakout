@@ -15,7 +15,6 @@ import java.util.Scanner;
 public class Level implements Screen{
     private Game myGame;
     private String inputFile;
-    //private Ball myBalls.get(0);
     private Paddle myPaddle;
     private List<Block> myBlocks= new ArrayList<>();
     private List<Powerup> allPowerups = new ArrayList<>();
@@ -127,11 +126,11 @@ public class Level implements Screen{
     }
     private void handleBallPaddleCollision(){
         for(Ball myBall:myBalls) {
-            if (myBall.getBounds().intersects(myPaddle.getBounds())) {
+            if (myBall.getMyBallImage().getBounds().intersects(myPaddle.getMyPaddleImage().getBounds())) {
                 myBall.setyVelocity(-1 * myBall.getyVelocity());
-                if (myBall.getX() < myPaddle.getX() + Paddle.PADDLE_WIDTH / 3.0 && myBall.getxVelocity() > 0) {
+                if (myBall.getMyBallImage().getX() < myPaddle.getMyPaddleImage().getX() + Paddle.PADDLE_WIDTH / 3.0 && myBall.getxVelocity() > 0) {
                     myBall.setxVelocity(-1 * myBall.getxVelocity());
-                } else if (myBall.getX() > myPaddle.getX() + 2 * Paddle.PADDLE_WIDTH / 3.0 && myBall.getxVelocity() < 0) {
+                } else if (myBall.getMyBallImage().getX() > myPaddle.getMyPaddleImage().getX() + 2 * Paddle.PADDLE_WIDTH / 3.0 && myBall.getxVelocity() < 0) {
                     myBall.setxVelocity(-1 * myBall.getxVelocity());
                 }
             }
@@ -141,12 +140,12 @@ public class Level implements Screen{
         for(Ball myBall:myBalls) {
             if (myBall.isInPlay()) {
                 for (int i = 0; i < myBlocks.size(); i++) {
-                    if (myBlocks.get(i).getBounds().intersects(myBall.getBounds())) {
+                    if (myBlocks.get(i).getMyBlockImage().getBounds().intersects(myBall.getMyBallImage().getBounds())) {
                         myBlocks.get(i).setHitsToBreak(myBlocks.get(i).getHitsToBreak() - 1);
-                        if (myBall.getX() + myBall.getWidth() >= myBlocks.get(i).getX() && myBall.getX() <= myBlocks.get(i).getX() + myBlocks.get(i).getWidth()) {
+                        if (myBall.getMyBallImage().getX() + myBall.getMyBallImage().getWidth() >= myBlocks.get(i).getMyBlockImage().getX() && myBall.getMyBallImage().getX() <= myBlocks.get(i).getMyBlockImage().getX() + myBlocks.get(i).getMyBlockImage().getWidth()) {
                             myBall.setyVelocity(-1 * myBall.getyVelocity());
                         }
-                        if (myBall.getY() >= myBlocks.get(i).getY() + myBlocks.get(i).getHeight() && myBall.getY() <= myBlocks.get(i).getY()) {
+                        if (myBall.getMyBallImage().getY() >= myBlocks.get(i).getMyBlockImage().getY() + myBlocks.get(i).getMyBlockImage().getHeight() && myBall.getMyBallImage().getY() <= myBlocks.get(i).getMyBlockImage().getY()) {
                             myBall.setxVelocity(-1 * myBall.getxVelocity());
                         }
                         if (myBlocks.get(i).getHitsToBreak() == 0) {
@@ -162,9 +161,9 @@ public class Level implements Screen{
     }
     private void handlePaddlePowerupCollision(){
         for(int i=0;i<allPowerups.size();){
-            if(allPowerups.get(i).getBounds().intersects(myPaddle.getBounds())){
+            if(allPowerups.get(i).getMyPowerupImage().getBounds().intersects(myPaddle.getMyPaddleImage().getBounds())){
                 allPowerups.get(i).activatePowerup();
-                allPowerups.get(i).destroyImage(myGame.getRoot());
+                allPowerups.get(i).getMyPowerupImage().destroyImage(myGame.getRoot());
                 activePowerups.add(allPowerups.get(i));
                 allPowerups.remove(i);
             }
@@ -175,14 +174,14 @@ public class Level implements Screen{
     }
     private void handleBallDeath() {
         for (Ball b : myBalls){
-            if (b.atBottom()) {
+            if (b.getMyBallImage().atBottom()) {
                 Ball initialBall = myBalls.get(0);
                 myGame.setLives(myGame.getLives() - 1);
                 myPaddle.resetLocation();
                 initialBall.resetLocation();
                 for(int i=1;i< myBalls.size();i++){
                     if(myBalls.get(i).isInPlay()) {
-                        myBalls.get(i).destroyImage(myGame.getRoot());
+                        myBalls.get(i).getMyBallImage().destroyImage(myGame.getRoot());
                         myBalls.remove(i);
                         i--;
                     }

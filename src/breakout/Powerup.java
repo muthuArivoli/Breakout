@@ -1,9 +1,6 @@
 package breakout;
 
-import javafx.geometry.Bounds;
 import javafx.scene.Group;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * This provides the basic functionality for all powerups.
@@ -14,23 +11,23 @@ public abstract class Powerup {
     public static final int POWERUPVELOCITY = 3;
     public static final int POWERUPTIME = 6;
 
-    private ImageView myPowerUpImage;
+    private DisplayImage myPowerupImage;
     private double velocity;
     private double timeToExpire;
-    Powerup(String file_name,int xpos, int ypos,int width,Group root){
-        myPowerUpImage=new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(file_name)));
-        myPowerUpImage.setFitWidth((Game.LENGTH /width-1)/2);
-        myPowerUpImage.setFitHeight(19/2);
-        myPowerUpImage.setX(xpos);
-        myPowerUpImage.setY(ypos);
+    public Powerup(String file_name,double xpos, double ypos,double width){
+        myPowerupImage=new DisplayImage(file_name);
+        myPowerupImage.setFitWidth((Game.LENGTH /width-1)/2);
+        myPowerupImage.setFitHeight(18.0/2);
+        myPowerupImage.setX(xpos);
+        myPowerupImage.setY(ypos);
     }
     public void startMoving(Group root){
-        root.getChildren().add(myPowerUpImage);
+        myPowerupImage.addImage(root);
         velocity = POWERUPVELOCITY;
         System.out.println(velocity);
     }
     public void updateLocation(){
-        myPowerUpImage.setY(myPowerUpImage.getY()+velocity);
+        myPowerupImage.setY(myPowerupImage.getY()+velocity);
     }
     public double getTimeToExpire(){
         return timeToExpire;
@@ -38,12 +35,9 @@ public abstract class Powerup {
     public void setTimeToExpire(double timeToExpire){
         this.timeToExpire = timeToExpire;
     }
+    public DisplayImage getMyPowerupImage() {
+        return myPowerupImage;
+    }
     public abstract void activatePowerup();
     public abstract void deactivatePowerup();
-    public void destroyImage(Group root){
-        root.getChildren().remove(myPowerUpImage);
-    }
-    public Bounds getBounds() {
-        return myPowerUpImage.getBoundsInParent();
-    }
 }

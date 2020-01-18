@@ -1,9 +1,6 @@
 package breakout;
 
-import javafx.geometry.Bounds;
 import javafx.scene.Group;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * This represents the most common type of block that is worth 10 points and takes 1 hit to break.
@@ -11,15 +8,15 @@ import javafx.scene.image.ImageView;
 public class RegularBlock implements Block{
     public static final String REG_BRICK_FILE = "brick1.gif";
 
-    private ImageView myBlock;
+    private DisplayImage myBlockImage;
     private int hitsToBreak;
-    public RegularBlock(String file_name,int xpos, int ypos,int width,Group root){
-        myBlock = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(file_name)));
-        myBlock.setFitWidth(Game.LENGTH /width-1);
-        myBlock.setFitHeight(19);
-        myBlock.setX(xpos);
-        myBlock.setY(ypos);
-        root.getChildren().add(myBlock);
+    public RegularBlock(String file_name,double xpos, double ypos,double width,Group root){
+        myBlockImage = new DisplayImage(file_name);
+        myBlockImage.setFitWidth(Game.LENGTH /width-1);
+        myBlockImage.setFitHeight(19);
+        myBlockImage.setX(xpos);
+        myBlockImage.setY(ypos);
+        myBlockImage.addImage(root);
         hitsToBreak = 1;
     }
     public int getScore(){
@@ -31,22 +28,10 @@ public class RegularBlock implements Block{
     public void setHitsToBreak(int hitsToBreak){
         this.hitsToBreak = hitsToBreak;
     }
-    public double getX() {
-        return myBlock.getBoundsInLocal().getMinX();
-    }
-    public double getY() {
-        return myBlock.getBoundsInLocal().getMinY();
-    }
-    public double getWidth() {
-        return myBlock.getBoundsInLocal().getMaxX() - getX();
-    }
-    public double getHeight() {
-        return myBlock.getBoundsInLocal().getMaxY() - getY();
-    }
-    public Bounds getBounds(){
-        return myBlock.getBoundsInParent();
-    }
     public void destroy(Group root){
-        root.getChildren().remove(myBlock);
+        myBlockImage.destroyImage(root);
+    }
+    public DisplayImage getMyBlockImage(){
+        return myBlockImage;
     }
 }

@@ -14,11 +14,11 @@ public class MultipleBallBlock extends SpecialBlock {
     @Override
     public void destroy(Group root) {
         mySecondaryBall.setInPlay(true);
-        mySecondaryBall.setX(getX());
-        mySecondaryBall.setY(getY());
+        mySecondaryBall.getMyBallImage().setX(this.getMyBlockImage().getX());
+        mySecondaryBall.getMyBallImage().setY(this.getMyBlockImage().getY());
         mySecondaryBall.setxVelocity(Ball.START_X_VELOCITY);
         mySecondaryBall.setyVelocity(Ball.START_Y_VELOCITY);
         super.destroy(root);
-        root.getChildren().add(mySecondaryBall.getMyBallImage());
+        mySecondaryBall.getMyBallImage().addImage(root);
     }
 }

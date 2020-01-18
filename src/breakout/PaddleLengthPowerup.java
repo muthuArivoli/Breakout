@@ -10,7 +10,7 @@ public class PaddleLengthPowerup extends Powerup{
     public static final String PADDLE_LENGTH_FILE = "sizepower.gif";
     private Paddle myPaddle;
     public PaddleLengthPowerup(int xpos, int ypos, int width, Group root,Paddle myPaddle){
-        super(PADDLE_LENGTH_FILE,xpos,ypos,width,root);
+        super(PADDLE_LENGTH_FILE,xpos,ypos,width);
         this.myPaddle = myPaddle;
     }
     @Override

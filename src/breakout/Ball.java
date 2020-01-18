@@ -1,9 +1,6 @@
 package breakout;
 
-import javafx.geometry.Bounds;
 import javafx.scene.Group;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * This represents a ball in the game that the player will try to manipulate to break blocks.
@@ -15,15 +12,15 @@ public class Ball {
 
     private double xVelocity;
     private double yVelocity;
-    private ImageView myBallImage;
+    private DisplayImage myBallImage;
     private boolean coupled;
     private boolean inPlay;
     public Ball(){
-        myBallImage = new ImageView(new Image(this.getClass().getClassLoader().getResourceAsStream(BALL_FILE)));
+        myBallImage = new DisplayImage(BALL_FILE);
         inPlay = false;
     }
     public void initialize(Group root) {
-        root.getChildren().add(myBallImage);
+        myBallImage.addImage(root);
         inPlay = true;
         resetLocation();
     }
@@ -32,24 +29,6 @@ public class Ball {
     }
     public double getyVelocity() {
         return yVelocity;
-    }
-    public double getX(){
-        return myBallImage.getX();
-    }
-    public double getY(){
-        return myBallImage.getY();
-    }
-    public void setX(double x){
-        myBallImage.setX(x);
-    }
-    public void setY(double y){
-        myBallImage.setY(y);
-    }
-    public double getWidth(){
-        return myBallImage.getBoundsInLocal().getMaxX() - getX();
-    }
-    public double getHeight(){
-        return myBallImage.getBoundsInLocal().getMaxY() - getY();
     }
     public void setxVelocity(double xVelocity) {
         this.xVelocity = xVelocity;
@@ -65,11 +44,11 @@ public class Ball {
     }
     public void updateLocation(double elapsedTime){
         if(!coupled) {
-            if (!inXBounds()) {
+            if (!myBallImage.inXBounds()) {
                 xVelocity *= -1;
             }
             myBallImage.setX(myBallImage.getX() + this.xVelocity * elapsedTime);
-            if (!inYBounds()) {
+            if (!myBallImage.inYBounds()) {
                 yVelocity *= -1;
             }
             myBallImage.setY(myBallImage.getY() + this.yVelocity * elapsedTime);
@@ -93,7 +72,7 @@ public class Ball {
     public void moveCoupledLeft(){
         if(coupled){
             myBallImage.setX(myBallImage.getX() - Paddle.PADDLE_SPEED);
-            if(!inXBounds()) {
+            if(!myBallImage.inXBounds()) {
                 moveCoupledRight();
             }
         }
@@ -105,24 +84,12 @@ public class Ball {
     public void moveCoupledRight(){
         if(coupled){
             myBallImage.setX(myBallImage.getX() + Paddle.PADDLE_SPEED);
-            if(!inXBounds()) {
+            if(!myBallImage.inXBounds()) {
                 moveCoupledLeft();
             }
         }
     }
-    public boolean atBottom(){
-        return (myBallImage.getBoundsInParent().getMinY()>Paddle.PADDLE_HEIGHT);
-    }
-    public boolean inXBounds(){
-        return (myBallImage.getBoundsInParent().getMinX()>0 && myBallImage.getBoundsInParent().getMaxX()<Game.LENGTH);
-    }
-    public boolean inYBounds(){
-        return (myBallImage.getBoundsInParent().getMinY()>35 && myBallImage.getBoundsInParent().getMaxY()<Game.LENGTH);
-    }
-    public Bounds getBounds(){
-        return myBallImage.getBoundsInParent();
-    }
-    public ImageView getMyBallImage() {
+    public DisplayImage getMyBallImage() {
         return this.myBallImage;
     }
     public boolean isInPlay() {
@@ -130,8 +97,5 @@ public class Ball {
     }
     public void setInPlay(boolean inPlay) {
         this.inPlay = inPlay;
-    }
-    public void destroyImage(Group root){
-        root.getChildren().remove(myBallImage);
     }
 }

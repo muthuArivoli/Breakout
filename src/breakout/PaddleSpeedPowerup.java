@@ -11,7 +11,7 @@ public class PaddleSpeedPowerup extends Powerup{
 
     private Paddle myPaddle;
     public PaddleSpeedPowerup(int xpos, int ypos, int width, Group root, Paddle myPaddle){
-        super(BALL_SPEED_FILE, xpos, ypos, width, root);
+        super(BALL_SPEED_FILE, xpos, ypos, width);
         this.myPaddle = myPaddle;
     }
     @Override

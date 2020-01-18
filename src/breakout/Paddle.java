@@ -38,7 +38,7 @@ public class Paddle {
         return myPaddleImage;
     }
     public void resetLocation(){
-        myPaddleImage.setX(Game.LENGTH /2);
+        myPaddleImage.setX(Game.LENGTH / 2.0);
         myPaddleImage.setY(PADDLE_HEIGHT);
     }
 }

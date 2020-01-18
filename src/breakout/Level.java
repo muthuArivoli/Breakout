@@ -47,7 +47,7 @@ public class Level implements Screen{
                     int xpos = k * (Game.LENGTH / c);
                     int ypos = 20 * i + 80;
                     if(in==4){
-                        Powerup newPowerup = createPowerup(in,xpos,ypos,c,root);
+                        Powerup newPowerup = createPowerup(in,xpos,ypos,c);
                         allPowerups.add(newPowerup);
                         myBlocks.add(BlockCreator.createBlock(in,xpos,ypos,c,root,newPowerup));
                     }
@@ -67,18 +67,18 @@ public class Level implements Screen{
         }
     }
 
-    private Powerup createPowerup(int in, int xpos, int ypos, int width, Group root){
+    private Powerup createPowerup(int in, int xpos, int ypos, int width){
         if(in==4){
-            return new PaddleLengthPowerup(xpos,ypos,width,root,myPaddle);
+            return new PaddleLengthPowerup(xpos,ypos,width,myPaddle);
         }
         else if(in==5){
-            return new PaddleSpeedPowerup(xpos,ypos,width,root,myPaddle);
+            return new PaddleSpeedPowerup(xpos,ypos,width,myPaddle);
         }
         else if(in==6){
-            return new BallSpeedPowerup(xpos,ypos,width,root,myBalls.get(0));
+            return new BallSpeedPowerup(xpos,ypos,width,myBalls.get(0));
         }
         else{
-            return new ScoreMultiplierPowerup(xpos,ypos,width,root,myScoreMultiplier);
+            return new ScoreMultiplierPowerup(xpos,ypos,width,myScoreMultiplier);
         }
     }
 

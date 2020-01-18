@@ -15,11 +15,12 @@ import java.util.Scanner;
 public class Level implements Screen{
     private Game myGame;
     private String inputFile;
-    private Ball myBall;
+    //private Ball myBalls.get(0);
     private Paddle myPaddle;
     private List<Block> myBlocks= new ArrayList<>();
     private List<Powerup> allPowerups = new ArrayList<>();
     private List<Powerup> activePowerups = new ArrayList<>();
+    private List<Ball> myBalls = new ArrayList<>();
     private int myLevel;
     private ScoreMultiplier myScoreMultiplier = new ScoreMultiplier(1);
     private Scorebar myScorebar;
@@ -32,7 +33,8 @@ public class Level implements Screen{
 
     @Override
     public void initialize(Group root) {
-        myBall = new Ball(root);
+        myBalls.add(new Ball());
+        myBalls.get(0).initialize(root);
         myPaddle = new Paddle(root);
         myScorebar = new Scorebar(root);
         try {
@@ -45,12 +47,17 @@ public class Level implements Screen{
                     int in = f.nextInt();
                     int xpos = k * (Game.LENGTH / c);
                     int ypos = 20 * i + 80;
-                    if(in>=4){
+                    if(in==4){
                         Powerup newPowerup = createPowerup(in,xpos,ypos,c,root);
                         allPowerups.add(newPowerup);
                         myBlocks.add(BlockCreator.createBlock(in,xpos,ypos,c,root,newPowerup));
                     }
-                    else {
+                    else if(in==5){
+                        Ball myNewSecondaryBall = new Ball();
+                        myBalls.add(myNewSecondaryBall);
+                        myBlocks.add(BlockCreator.createBlock(in,xpos,ypos,c,root,myNewSecondaryBall));
+                    }
+                    else if (in!=0){
                         myBlocks.add(BlockCreator.createBlock(in, xpos, ypos, c, root));
                     }
                 }
@@ -69,7 +76,7 @@ public class Level implements Screen{
             return new PaddleSpeedPowerup(xpos,ypos,width,root,myPaddle);
         }
         else if(in==6){
-            return new BallSpeedPowerup(xpos,ypos,width,root,myBall);
+            return new BallSpeedPowerup(xpos,ypos,width,root,myBalls.get(0));
         }
         else{
             return new ScoreMultiplierPowerup(xpos,ypos,width,root,myScoreMultiplier);
@@ -93,7 +100,9 @@ public class Level implements Screen{
      * @param elapsedTime amount of time that has elapsed
      */
     private void updateLocations(double elapsedTime){
-        myBall.updateLocation(elapsedTime);
+        for(Ball b:myBalls) {
+            b.updateLocation(elapsedTime);
+        }
         for(Powerup p:allPowerups){
             p.updateLocation();
         }
@@ -117,32 +126,37 @@ public class Level implements Screen{
         myScorebar.setMyDisplay(myGame.getScore(),myGame.getLives());
     }
     private void handleBallPaddleCollision(){
-        if(myBall.getBounds().intersects(myPaddle.getBounds())){
-            myBall.setyVelocity(-1*myBall.getyVelocity());
-            if(myBall.getX()<myPaddle.getX()+Paddle.PADDLE_WIDTH/3 && myBall.getxVelocity()>0){
-                myBall.setxVelocity(-1*myBall.getxVelocity());
-            }
-            else if(myBall.getX()>myPaddle.getX()+2*Paddle.PADDLE_WIDTH/3 && myBall.getxVelocity()<0){
-                myBall.setxVelocity(-1*myBall.getxVelocity());
+        for(Ball myBall:myBalls) {
+            if (myBall.getBounds().intersects(myPaddle.getBounds())) {
+                myBall.setyVelocity(-1 * myBall.getyVelocity());
+                if (myBall.getX() < myPaddle.getX() + Paddle.PADDLE_WIDTH / 3.0 && myBall.getxVelocity() > 0) {
+                    myBall.setxVelocity(-1 * myBall.getxVelocity());
+                } else if (myBall.getX() > myPaddle.getX() + 2 * Paddle.PADDLE_WIDTH / 3.0 && myBall.getxVelocity() < 0) {
+                    myBall.setxVelocity(-1 * myBall.getxVelocity());
+                }
             }
         }
     }
     private void handleBallBrickCollision(){
-        for(int i=0;i<myBlocks.size();i++){
-            if(myBlocks.get(i).getBounds().intersects(myBall.getBounds())){
-                myBlocks.get(i).setHitsToBreak(myBlocks.get(i).getHitsToBreak()-1);
-                if(myBall.getX()+myBall.getWidth()>=myBlocks.get(i).getX() && myBall.getX()<=myBlocks.get(i).getX()+myBlocks.get(i).getWidth()) {
-                    myBall.setyVelocity(-1 * myBall.getyVelocity());
+        for(Ball myBall:myBalls) {
+            if (myBall.isInPlay()) {
+                for (int i = 0; i < myBlocks.size(); i++) {
+                    if (myBlocks.get(i).getBounds().intersects(myBall.getBounds())) {
+                        myBlocks.get(i).setHitsToBreak(myBlocks.get(i).getHitsToBreak() - 1);
+                        if (myBall.getX() + myBall.getWidth() >= myBlocks.get(i).getX() && myBall.getX() <= myBlocks.get(i).getX() + myBlocks.get(i).getWidth()) {
+                            myBall.setyVelocity(-1 * myBall.getyVelocity());
+                        }
+                        if (myBall.getY() >= myBlocks.get(i).getY() + myBlocks.get(i).getHeight() && myBall.getY() <= myBlocks.get(i).getY()) {
+                            myBall.setxVelocity(-1 * myBall.getxVelocity());
+                        }
+                        if (myBlocks.get(i).getHitsToBreak() == 0) {
+                            myGame.setScore(myGame.getScore() + myBlocks.get(i).getScore() * myScoreMultiplier.getValue());
+                            myBlocks.get(i).destroy(myGame.getRoot());
+                            myBlocks.remove(i);
+                        }
+                        break;
+                    }
                 }
-                if(myBall.getY()>=myBlocks.get(i).getY()+myBlocks.get(i).getHeight() && myBall.getY()<=myBlocks.get(i).getY()) {
-                    myBall.setxVelocity(-1 * myBall.getxVelocity());
-                }
-                if(myBlocks.get(i).getHitsToBreak()==0) {
-                    myGame.setScore(myGame.getScore() + myBlocks.get(i).getScore()*myScoreMultiplier.getValue());
-                    myBlocks.get(i).destroy(myGame.getRoot());
-                    myBlocks.remove(i);
-                }
-                break;
             }
         }
     }
@@ -159,11 +173,22 @@ public class Level implements Screen{
             }
         }
     }
-    private void handleBallDeath(){
-        if(myBall.atBottom()){
-            myGame.setLives(myGame.getLives()-1);
-            myPaddle.resetLocation();
-            myBall.resetLocation();
+    private void handleBallDeath() {
+        for (Ball b : myBalls){
+            if (b.atBottom()) {
+                Ball initialBall = myBalls.get(0);
+                myGame.setLives(myGame.getLives() - 1);
+                myPaddle.resetLocation();
+                initialBall.resetLocation();
+                for(int i=1;i< myBalls.size();i++){
+                    if(myBalls.get(i).isInPlay()) {
+                        myBalls.get(i).destroyImage(myGame.getRoot());
+                        myBalls.remove(i);
+                        i--;
+                    }
+                }
+                break;
+            }
         }
     }
     private void handleChangeLevel(){
@@ -184,20 +209,20 @@ public class Level implements Screen{
     public void handleKeyInput(KeyCode code) {
         if (code == KeyCode.RIGHT) {
             myPaddle.moveRight();
-            myBall.moveCoupledRight();
+            myBalls.get(0).moveCoupledRight();
         }
         else if (code == KeyCode.LEFT) {
             myPaddle.moveLeft();
-            myBall.moveCoupledLeft();
+            myBalls.get(0).moveCoupledLeft();
         }
         else if (code == KeyCode.SPACE){
-            myBall.uncouple();
+            myBalls.get(0).uncouple();
         }
         else if (code == KeyCode.L){
             myGame.setLives(myGame.getLives()+1);
         }
         else if (code == KeyCode.R){
-            myBall.resetLocation();
+            myBalls.get(0).resetLocation();
             myPaddle.resetLocation();
         }
         else if (code == KeyCode.T){

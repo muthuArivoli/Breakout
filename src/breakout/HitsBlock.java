@@ -5,8 +5,8 @@ package breakout;
  */
 public class HitsBlock extends SpecialBlock {
     public static final String HITS_BLOCK_FILE = "brick2.gif";
-    public HitsBlock(Block myBlock){
+    public HitsBlock(Block myBlock) {
         super(myBlock);
-        setHitsToBreak(getHitsToBreak()+2);
+        setHitsToBreak(getHitsToBreak() + 2);
     }
 }

@@ -17,4 +17,7 @@ public class BlockCreator {
     public static Block createBlock(int in, int xpos, int ypos, int c, Group root, Powerup myPowerup) {
         return new PowerupBlock(new RegularBlock(PowerupBlock.POWER_BRICK_FILE, xpos, ypos, c, root), myPowerup);
     }
+    public static Block createBlock(int in, int xpos, int ypos, int c, Group root, Ball myNewSecondaryBall){
+        return new MultipleBallBlock(new RegularBlock(MultipleBallBlock.MULTIPLE_BRICK_FILE, xpos, ypos, c, root),myNewSecondaryBall);
+    }
 }

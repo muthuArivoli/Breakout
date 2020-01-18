@@ -30,7 +30,7 @@ public class SplashScreen implements Screen {
     @Override
     public void handleKeyInput(KeyCode code) {
         //User pressing any key will start first level
-        if(code!=null){
+        if (code != null) {
             myGame.setCurrScreen(myGame.getLevel(1));
         }
     }

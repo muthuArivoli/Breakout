@@ -13,6 +13,8 @@ public class PowerupBlock extends SpecialBlock{
         super(myBlock);
         this.myPowerup = myPowerup;
     }
+
+    @Override
     public void destroy(Group root){
         super.destroy(root);
         myPowerup.startMoving(root);

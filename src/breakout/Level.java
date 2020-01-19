@@ -260,7 +260,7 @@ public class Level implements Screen{
         else if (code == KeyCode.DIGIT2){
             myGame.setCurrScreen(myGame.getLevel(2));
         }
-        else if (code == KeyCode.DIGIT3){
+        else if (code.isDigitKey()){
             myGame.setCurrScreen(myGame.getLevel(3));
         }
 

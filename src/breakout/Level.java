@@ -5,6 +5,7 @@ import javafx.scene.input.KeyCode;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,6 +24,7 @@ public class Level implements Screen{
     private int myLevel;
     private ScoreMultiplier myScoreMultiplier = new ScoreMultiplier(1);
     private Scorebar myScorebar;
+    private Pinball myPinball;
 
     public Level(Game myGame,String inputFile,int myLevel){
         this.myGame = myGame;
@@ -36,6 +38,7 @@ public class Level implements Screen{
         myBalls.get(0).initialize(root);
         myPaddle = new Paddle(root);
         myScorebar = new Scorebar(root);
+        myPinball = new Pinball(root);
         try {
             Scanner f = new Scanner(new File("resources/"+inputFile));
             int r,c;
@@ -89,6 +92,7 @@ public class Level implements Screen{
         updateScorebar();
         handleBallPaddleCollision();
         handleBallBrickCollision();
+        handleBallPinballCollision();
         handlePaddlePowerupCollision();
         handleBallDeath();
         handleChangeLevel();
@@ -108,16 +112,17 @@ public class Level implements Screen{
     }
 
     /**
-     * Updates time that each active powerup still has
+     * Updates time that each active powerup still has and removes any powerups that have expired
      * @param elapsedTime amount of time that has elapsed
      */
     private void updateActivePowerups(double elapsedTime){
-        for(int i=0;i<activePowerups.size();i++){
-            activePowerups.get(i).setTimeToExpire(activePowerups.get(i).getTimeToExpire() - elapsedTime);
-            if(activePowerups.get(i).getTimeToExpire()<=0){
-                activePowerups.get(i).deactivatePowerup();
-                activePowerups.remove(i);
-                i--;
+        Iterator<Powerup> itr = activePowerups.iterator();
+        while(itr.hasNext()){
+            Powerup activePowerup = itr.next();
+            activePowerup.setTimeToExpire(activePowerup.getTimeToExpire() - elapsedTime);
+            if(activePowerup.getTimeToExpire()<=0){
+                activePowerup.deactivatePowerup();
+                itr.remove();
             }
         }
     }
@@ -142,10 +147,10 @@ public class Level implements Screen{
                 for (int i = 0; i < myBricks.size(); i++) {
                     if (myBricks.get(i).getMyBrickImage().getBounds().intersects(myBall.getMyBallImage().getBounds())) {
                         myBricks.get(i).setHitsToBreak(myBricks.get(i).getHitsToBreak() - 1);
-                        if (myBall.getMyBallImage().getX() + myBall.getMyBallImage().getWidth() >= myBricks.get(i).getMyBrickImage().getX() && myBall.getMyBallImage().getX() <= myBricks.get(i).getMyBrickImage().getX() + myBricks.get(i).getMyBrickImage().getWidth()) {
+                        if (myBall.getMyBallImage().getMaxX() >= myBricks.get(i).getMyBrickImage().getX() && myBall.getMyBallImage().getX() <= myBricks.get(i).getMyBrickImage().getMaxX()) {
                             myBall.setyVelocity(-1 * myBall.getyVelocity());
                         }
-                        if (myBall.getMyBallImage().getY() >= myBricks.get(i).getMyBrickImage().getY() + myBricks.get(i).getMyBrickImage().getHeight() && myBall.getMyBallImage().getY() <= myBricks.get(i).getMyBrickImage().getY()) {
+                        if (myBall.getMyBallImage().getY() >= myBricks.get(i).getMyBrickImage().getMaxY() && myBall.getMyBallImage().getMaxY() <= myBricks.get(i).getMyBrickImage().getY()) {
                             myBall.setxVelocity(-1 * myBall.getxVelocity());
                         }
                         if (myBricks.get(i).getHitsToBreak() == 0) {
@@ -159,16 +164,38 @@ public class Level implements Screen{
             }
         }
     }
-    private void handlePaddlePowerupCollision(){
-        for(int i=0;i<allPowerups.size();){
-            if(allPowerups.get(i).getMyPowerupImage().getBounds().intersects(myPaddle.getMyPaddleImage().getBounds())){
-                allPowerups.get(i).activatePowerup();
-                allPowerups.get(i).getMyPowerupImage().destroyImage(myGame.getRoot());
-                activePowerups.add(allPowerups.get(i));
-                allPowerups.remove(i);
+    private void handleBallPinballCollision(){
+        for(Ball myBall:myBalls) {
+            if(myBall.getMyBallImage().getBounds().intersects(myPinball.getMyLeftPinballImage().getBounds())){
+                double angle = Math.toDegrees(Math.atan2(myBall.getyVelocity(), myBall.getxVelocity()));
+                double normalAngle = myPinball.getLeftAngle();
+                angle = 2 * normalAngle - angle;
+                double mag = Math.hypot(myBall.getxVelocity(), myBall.getyVelocity());
+                myBall.setxVelocity(Math.cos(Math.toRadians(angle))*mag);
+                myBall.setyVelocity(Math.sin(Math.toRadians(angle))*mag);
             }
-            else{
-                i++;
+            if(myBall.getMyBallImage().getBounds().intersects(myPinball.getMyRightPinballImage().getBounds())){
+                double angle = Math.toDegrees(Math.atan2(myBall.getyVelocity(), myBall.getxVelocity()));
+                double normalAngle = myPinball.getRightAngle();
+                angle = 2 * normalAngle  - angle;
+                double mag = Math.hypot(myBall.getxVelocity(), myBall.getyVelocity());
+                myBall.setxVelocity(Math.cos(Math.toRadians(angle))*mag);
+                myBall.setyVelocity(Math.sin(Math.toRadians(angle))*mag);
+                System.out.println(myBall.getxVelocity());
+                System.out.println(myBall.getyVelocity());
+
+            }
+        }
+    }
+    private void handlePaddlePowerupCollision(){
+        Iterator<Powerup> itr = allPowerups.iterator();
+        while(itr.hasNext()){
+            Powerup myPowerup = itr.next();
+            if(myPowerup.getMyPowerupImage().getBounds().intersects(myPaddle.getMyPaddleImage().getBounds())){
+                myPowerup.activatePowerup();
+                myPowerup.getMyPowerupImage().destroyImage(myGame.getRoot());
+                activePowerups.add(myPowerup);
+                itr.remove();
             }
         }
     }
@@ -213,6 +240,12 @@ public class Level implements Screen{
         else if (code == KeyCode.LEFT) {
             myPaddle.moveLeft();
             myBalls.get(0).moveCoupledLeft();
+        }
+        else if (code == KeyCode.UP) {
+            myPinball.moveUp();
+        }
+        else if (code == KeyCode.DOWN) {
+            myPinball.moveDown();
         }
         else if (code == KeyCode.SPACE){
             myBalls.get(0).uncouple();

@@ -24,7 +24,6 @@ public abstract class Powerup {
     public void startMoving(Group root){
         myPowerupImage.addImage(root);
         velocity = POWERUPVELOCITY;
-        System.out.println(velocity);
     }
     public void updateLocation(){
         myPowerupImage.setY(myPowerupImage.getY()+velocity);

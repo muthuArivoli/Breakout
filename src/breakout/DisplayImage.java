@@ -4,6 +4,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.transform.Transform;
 
 import java.util.Objects;
 
@@ -14,6 +15,9 @@ public class DisplayImage {
     }
     public void addImage(Group root){
         root.getChildren().add(myImage);
+    }
+    public void addTransform(Transform rotate){
+        myImage.getTransforms().add(rotate);
     }
     public void setFitWidth(double val){
         myImage.setFitWidth(val);
@@ -39,11 +43,23 @@ public class DisplayImage {
     public Bounds getBounds(){
         return myImage.getBoundsInParent();
     }
-    public double getWidth(){
-        return myImage.getBoundsInLocal().getMaxX() - getX();
+    public double getRotate(){
+        return myImage.getRotate();
     }
-    public double getHeight(){
-        return myImage.getBoundsInLocal().getMaxY() - getY();
+    public void setRotate(double value){
+        myImage.setRotate(value);
+    }
+    public double getMaxX(){
+        return myImage.getBoundsInParent().getMaxX();
+    }
+    public double getMaxY(){
+        return myImage.getBoundsInParent().getMaxY();
+    }
+    public double getMinX(){
+        return myImage.getBoundsInParent().getMinX();
+    }
+    public double getMinY(){
+        return myImage.getBoundsInParent().getMinY();
     }
     public boolean atBottom(){
         return (getBounds().getMinY()>Paddle.PADDLE_HEIGHT);

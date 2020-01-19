@@ -6,7 +6,7 @@ import javafx.scene.Group;
  * This represents a ball in the game that the player will try to manipulate to break blocks.
  */
 public class Ball {
-    public static final double START_X_VELOCITY = 250;
+    public static final double START_X_VELOCITY = 0;
     public static final double START_Y_VELOCITY = -300;
     public static final String BALL_FILE = "ball.gif";
 

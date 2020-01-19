@@ -12,6 +12,7 @@ import javafx.util.Duration;
 
 /**
  * The main driver code that initializes the game loop and sets the current screen in the game.
+ * @author Muthu Arivoli
  */
 public class Game extends Application {
     public static final String TITLE = "Breakout";
@@ -29,6 +30,10 @@ public class Game extends Application {
     private int score;
     private int lives;
 
+    /**
+     * Launch the game
+     * @param args
+     */
     public static void main (String[] args){launch(args);}
 
     /**
@@ -51,6 +56,10 @@ public class Game extends Application {
         animation.play();
     }
 
+    /**
+     * Sets the state of the game by setting the current screen of the game
+     * @param currScreen the new screen that the current screen is set to
+     */
     public void setCurrScreen(Screen currScreen){
         this.currScreen = currScreen;
         root.getChildren().clear();
@@ -58,20 +67,50 @@ public class Game extends Application {
         myScene.setOnKeyPressed(e -> currScreen.handleKeyInput(e.getCode()));
     }
 
+    /**
+     * Creates a new level and return an object to it
+     * @param level the number of the new level
+     * @return the instance of the new level
+     */
     public Screen getLevel(int level){
         return new Level(this,"level"+level+".txt", level);
     }
+
+    /**
+     * Gets the number of lives the player has remaining
+     * @return the nunmber of lives left
+     */
     public int getLives() {
         return lives;
     }
+
+    /**
+     * Gets the score of the game
+     * @return the score of the game
+     */
     public int getScore() {
         return score;
     }
+
+    /**
+     * Set the number of lives the player has left
+     * @param lives the new number of lives the player has left
+     */
     public void setLives(int lives) {
         this.lives = lives;
     }
+
+    /**
+     * Sets the score
+     * @param score the new score
+     */
     public void setScore(int score) {
         this.score = score;
     }
+
+    /**
+     * Gets the list of items that are currently being displayed on the screen
+     * @return the group of objects being displayed
+     */
     public Group getRoot(){return this.root;}
 }

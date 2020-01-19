@@ -19,7 +19,7 @@ public interface Screen {
     void initialize(Group root);
 
     /**
-     * Performs operations depending on what key the user has pressed
+     * Handles any user input through the keyboard by which the user interacts with the game
      * @param code the key that the user has pressed
      */
     void handleKeyInput(KeyCode code);

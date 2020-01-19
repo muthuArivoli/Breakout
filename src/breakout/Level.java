@@ -12,6 +12,7 @@ import java.util.Scanner;
 /**
  * This represents a level in the game. The level is read in from an input file and then handles all interactions
  * between objects present in the level.
+ * @author  Muthu Arivoli
  */
 public class Level implements Screen{
     private Game myGame;
@@ -26,12 +27,23 @@ public class Level implements Screen{
     private Scorebar myScorebar;
     private Pinball myPinball;
 
+    /**
+     * Creates a new level
+     * @param myGame the game that the level is being played in
+     * @param inputFile the inputFile for the initial state of the level
+     * @param myLevel the number of the level
+     */
     public Level(Game myGame,String inputFile,int myLevel){
         this.myGame = myGame;
         this.inputFile = inputFile;
         this.myLevel = myLevel;
     }
 
+    /**
+     * Initialize the level by creating all relevant objects and reading in the original configuration of blocks from
+     * the input file
+     * @param root Group that contains the elements that are currently being displayed on the screen
+     */
     @Override
     public void initialize(Group root) {
         myBalls.add(new Ball());
@@ -85,6 +97,11 @@ public class Level implements Screen{
         }
     }
 
+    /**
+     * Update the current state of the level by updating locations and handling collisions. Also determines if the level
+     * needs to change
+     * @param elapsedTime amount of time that has elapsed since last frame
+     */
     @Override
     public void update(double elapsedTime) {
         updateLocations(elapsedTime);
@@ -98,10 +115,6 @@ public class Level implements Screen{
         handleChangeLevel();
     }
 
-    /**
-     * Update locations of the dynamic elements in the level (the ball and moving powerups)
-     * @param elapsedTime amount of time that has elapsed
-     */
     private void updateLocations(double elapsedTime){
         for(Ball b:myBalls) {
             b.updateLocation(elapsedTime);
@@ -132,11 +145,18 @@ public class Level implements Screen{
     private void handleBallPaddleCollision(){
         for(Ball myBall:myBalls) {
             if (myBall.getMyBallImage().getBounds().intersects(myPaddle.getMyPaddleImage().getBounds())) {
-                myBall.setyVelocity(-1 * myBall.getyVelocity());
-                if (myBall.getMyBallImage().getX() < myPaddle.getMyPaddleImage().getX() + Paddle.PADDLE_WIDTH / 3.0 && myBall.getxVelocity() > 0) {
-                    myBall.setxVelocity(-1 * myBall.getxVelocity());
-                } else if (myBall.getMyBallImage().getX() > myPaddle.getMyPaddleImage().getX() + 2 * Paddle.PADDLE_WIDTH / 3.0 && myBall.getxVelocity() < 0) {
-                    myBall.setxVelocity(-1 * myBall.getxVelocity());
+                if(myGame.getScore()>10000){
+                    myBall.resetLocation();
+                    myPaddle.resetLocation();
+                    destroySecondaryBalls();
+                    return;
+                } else {
+                    myBall.setyVelocity(-1 * myBall.getyVelocity());
+                    if (myBall.getMyBallImage().getX() < myPaddle.getMyPaddleImage().getX() + Paddle.PADDLE_WIDTH / 3.0 && myBall.getxVelocity() > 0) {
+                        myBall.setxVelocity(-1 * myBall.getxVelocity());
+                    } else if (myBall.getMyBallImage().getX() > myPaddle.getMyPaddleImage().getX() + 2 * Paddle.PADDLE_WIDTH / 3.0 && myBall.getxVelocity() < 0) {
+                        myBall.setxVelocity(-1 * myBall.getxVelocity());
+                    }
                 }
             }
         }
@@ -195,35 +215,42 @@ public class Level implements Screen{
     private void handleBallDeath() {
         for (Ball b : myBalls){
             if (b.getMyBallImage().atBottom()) {
-                Ball initialBall = myBalls.get(0);
                 myGame.setLives(myGame.getLives() - 1);
                 myPaddle.resetLocation();
-                initialBall.resetLocation();
-                for(int i=1;i< myBalls.size();i++){
-                    if(myBalls.get(i).isInPlay()) {
-                        myBalls.get(i).getMyBallImage().destroyImage(myGame.getRoot());
-                        myBalls.remove(i);
-                        i--;
-                    }
-                }
-                break;
+                myBalls.get(0).resetLocation();
+                destroySecondaryBalls();
+                return;
+            }
+        }
+    }
+    private void destroySecondaryBalls() {
+        Iterator <Ball> itr = myBalls.listIterator(1);
+        while(itr.hasNext()){
+            Ball myBall = itr.next();
+            if(myBall.isInPlay()) {
+                myBall.getMyBallImage().destroyImage(myGame.getRoot());
+                itr.remove();
             }
         }
     }
     private void handleChangeLevel(){
         if(myBricks.isEmpty()){
             if(myLevel != Game.NUM_LEVELS) {
-                myGame.setCurrScreen(myGame.getLevel(myLevel+1));
+                System.out.println(myLevel);
             }
             else{
-                myGame.setCurrScreen(new WinScreen());
+                myGame.setCurrScreen(new WinScreen(myGame));
             }
         }
         if(myGame.getLives()==0){
-            myGame.setCurrScreen(new LoseScreen());
+            myGame.setCurrScreen(new LoseScreen(myGame));
         }
     }
 
+    /**
+     * Handles any user input through the keyboard by which the user interacts with the game
+     * @param code the key that the user has pressed
+     */
     @Override
     public void handleKeyInput(KeyCode code) {
         if (code == KeyCode.RIGHT) {
@@ -248,6 +275,7 @@ public class Level implements Screen{
         }
         else if (code == KeyCode.R){
             myBalls.get(0).resetLocation();
+            destroySecondaryBalls();
             myPaddle.resetLocation();
         }
         else if (code == KeyCode.T){
@@ -263,6 +291,8 @@ public class Level implements Screen{
         else if (code.isDigitKey()){
             myGame.setCurrScreen(myGame.getLevel(3));
         }
-
+        else if (code == KeyCode.U){
+            myGame.setScore(myGame.getScore()+10000);
+        }
     }
 }

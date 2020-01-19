@@ -13,7 +13,7 @@ public class ScoreMultiplierPowerup extends Powerup {
     }
     @Override
     public void activatePowerup() {
-        myScoreMultiplier.setValue(myScoreMultiplier.getValue()*2);
+        myScoreMultiplier.setValue(myScoreMultiplier.getValue() * 2);
         setTimeToExpire(POWERUPTIME);
     }
 

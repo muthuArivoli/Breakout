@@ -9,6 +9,6 @@ public class PointsBrick extends SpecialBrick {
         super(myBrick);
     }
     public int getScore(){
-        return 2*super.getScore();
+        return 2 * super.getScore();
     }
 }

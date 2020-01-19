@@ -1,7 +1,7 @@
 package breakout;
 
 /**
- * This represents a block that takes more hits to break than the original block.
+ * This represents a block that takes 2 more hits to break than the original block.
  */
 public class HitsBrick extends SpecialBrick {
     public static final String HITS_BLOCK_FILE = "brick2.gif";

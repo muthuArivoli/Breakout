@@ -1,7 +1,7 @@
 package breakout;
 
 /**
- * This represents a powerup that temporarily speeds up the ball for a short amount of time.
+ * This represents a powerup that temporarily speeds up the main (initial) ball for a short amount of time.
  */
 public class BallSpeedPowerup extends Powerup{
     public static final double BALL_SPEED_FACTOR = 2.0;
@@ -21,6 +21,6 @@ public class BallSpeedPowerup extends Powerup{
     @Override
     public void deactivatePowerup() {
         myBall.setxVelocity(myBall.getxVelocity()*BALL_SPEED_FACTOR);
-        myBall.setyVelocity(BALL_SPEED_FACTOR*myBall.getyVelocity());
+        myBall.setyVelocity(myBall.getyVelocity()*BALL_SPEED_FACTOR);
     }
 }

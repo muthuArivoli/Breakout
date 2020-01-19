@@ -2,6 +2,9 @@ package breakout;
 
 import javafx.scene.Group;
 
+/**
+ * A utility class that is used to create the various types of blocks in the game based on the input from the level file.
+ */
 public class BlockCreator {
     public static Brick createBlock(int in, int xpos, int ypos, int c, Group root){
         if(in==1){

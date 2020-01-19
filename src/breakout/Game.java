@@ -43,26 +43,22 @@ public class Game extends Application {
         stage.setScene(myScene);
         stage.setTitle(TITLE);
         stage.show();
-        // attach "game loop" to timeline to play it (basically just calling step() method repeatedly forever)
-        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
+        // attach "game loop" to timeline to play it (basically just calling update method on current screen repeatedly forever)
+        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> currScreen.update(SECOND_DELAY));
         Timeline animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
         animation.play();
     }
 
-    private void step (double elapsedTime) {
-        currScreen.update(elapsedTime);
-    }
-
-    void setCurrScreen(Screen currScreen){
+    public void setCurrScreen(Screen currScreen){
         this.currScreen = currScreen;
         root.getChildren().clear();
         currScreen.initialize(root);
         myScene.setOnKeyPressed(e -> currScreen.handleKeyInput(e.getCode()));
     }
 
-    Screen getLevel(int level){
+    public Screen getLevel(int level){
         return new Level(this,"level"+level+".txt", level);
     }
     public int getLives() {
@@ -78,5 +74,4 @@ public class Game extends Application {
         this.score = score;
     }
     public Group getRoot(){return this.root;}
-
 }

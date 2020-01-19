@@ -43,9 +43,6 @@ public class DisplayImage {
     public Bounds getBounds(){
         return myImage.getBoundsInParent();
     }
-    public double getRotate(){
-        return myImage.getRotate();
-    }
     public void setRotate(double value){
         myImage.setRotate(value);
     }
@@ -54,12 +51,6 @@ public class DisplayImage {
     }
     public double getMaxY(){
         return myImage.getBoundsInParent().getMaxY();
-    }
-    public double getMinX(){
-        return myImage.getBoundsInParent().getMinX();
-    }
-    public double getMinY(){
-        return myImage.getBoundsInParent().getMinY();
     }
     public boolean atBottom(){
         return (getBounds().getMinY()>Paddle.PADDLE_HEIGHT);

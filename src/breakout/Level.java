@@ -167,25 +167,18 @@ public class Level implements Screen{
     private void handleBallPinballCollision(){
         for(Ball myBall:myBalls) {
             if(myBall.getMyBallImage().getBounds().intersects(myPinball.getMyLeftPinballImage().getBounds())){
-                double angle = Math.toDegrees(Math.atan2(myBall.getyVelocity(), myBall.getxVelocity()));
-                double normalAngle = myPinball.getLeftAngle();
-                angle = 2 * normalAngle - angle;
-                double mag = Math.hypot(myBall.getxVelocity(), myBall.getyVelocity());
-                myBall.setxVelocity(Math.cos(Math.toRadians(angle))*mag);
-                myBall.setyVelocity(Math.sin(Math.toRadians(angle))*mag);
+                handleAngledCollision(myPinball.getLeftAngle(),myBall);
             }
             if(myBall.getMyBallImage().getBounds().intersects(myPinball.getMyRightPinballImage().getBounds())){
-                double angle = Math.toDegrees(Math.atan2(myBall.getyVelocity(), myBall.getxVelocity()));
-                double normalAngle = myPinball.getRightAngle();
-                angle = 2 * normalAngle  - angle;
-                double mag = Math.hypot(myBall.getxVelocity(), myBall.getyVelocity());
-                myBall.setxVelocity(Math.cos(Math.toRadians(angle))*mag);
-                myBall.setyVelocity(Math.sin(Math.toRadians(angle))*mag);
-                System.out.println(myBall.getxVelocity());
-                System.out.println(myBall.getyVelocity());
-
+                handleAngledCollision(myPinball.getRightAngle(),myBall);
             }
         }
+    }
+    private void handleAngledCollision(double normal, Ball myBall){
+        double angle = 2*normal - Math.toDegrees(Math.atan2(myBall.getyVelocity(), myBall.getxVelocity()));
+        double mag = Math.hypot(myBall.getxVelocity(), myBall.getyVelocity());
+        myBall.setxVelocity(Math.cos(Math.toRadians(angle))*mag);
+        myBall.setyVelocity(Math.sin(Math.toRadians(angle))*mag);
     }
     private void handlePaddlePowerupCollision(){
         Iterator<Powerup> itr = allPowerups.iterator();

@@ -50,7 +50,7 @@ public class WinScreen implements Screen {
      */
     @Override
     public void handleKeyInput(KeyCode code) {
-        if (code != null) {
+        if (code == KeyCode.SPACE) {
             myGame.setCurrScreen(new SplashScreen(myGame));
         }
     }

@@ -38,13 +38,16 @@ public class SplashScreen implements Screen {
                 "Green Bricks take 3 hits to break and are worth 10 points \n" +
                 "Gray Bricks are worth 20 points\n" +
                 "Purple Bricks will release a powerup once broken and are worth 10 points\n" +
-                "Gold Bricks will release another ball once broken and are worth 10 points\n\n" +
+                "Gold Bricks will release another ball once broken and are worth 10 points. A warning, however, if any \n" +
+                "of the balls " +
+                "touch the bottom of the screen, you will lose a life\n\n" +
                 "Green Powerups slow down the main ball for a while \n" +
                 "Blue Powerups increase the speed of the paddle for a short while \n" +
                 "Yellow Powerups will multiply any gained score by 2 for a while\n" +
                 "Red Powerups increase the size of the paddle for a while \n\n" +
                 "Finally, if you are able to accrue 10000 points, you will gain the special ability of being able \n" +
                 "to hold the ball with your paddle\n" +
+                "PRESS SPACE ONCE ENTERING THE GAME TO RELEASE THE BALL\n" +
                 "PRESS ANY KEY TO CONTINUE");
     }
 

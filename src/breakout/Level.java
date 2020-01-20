@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -54,7 +55,8 @@ public class Level implements Screen{
         myScorebar = new Scorebar(root);
         myPinball = new Pinball(root);
         try {
-            Scanner f = new Scanner(new File("resources/"+inputFile));
+            InputStream is = getClass().getResourceAsStream("/level"+myLevel+".txt");
+            Scanner f = new Scanner(is);
             int r,c;
             r = f.nextInt();
             c = f.nextInt();

@@ -16,6 +16,7 @@ import java.util.Scanner;
  * @author  Muthu Arivoli
  */
 public class Level implements Screen{
+    public static final int GRANT_BALL_HOLDING_SCORE = 10000;
     private Game myGame;
     private String inputFile;
     private Paddle myPaddle;
@@ -61,7 +62,7 @@ public class Level implements Screen{
                 for(int k = 0;k < c; k++){
                     int in = f.nextInt();
                     int xpos = k * (Game.LENGTH / c);
-                    int ypos = 20 * i + 80;
+                    int ypos = (RegularBrick.BRICK_HEIGHT + 1) * i + RegularBrick.BRICK_OFFSET;
                     if(in==4){
                         Powerup newPowerup = createPowerup(in,xpos,ypos,c);
                         allPowerups.add(newPowerup);
@@ -146,7 +147,7 @@ public class Level implements Screen{
     private void handleBallPaddleCollision(){
         for(Ball myBall:myBalls) {
             if (myBall.getMyBallImage().getBounds().intersects(myPaddle.getMyPaddleImage().getBounds())) {
-                if(myGame.getScore()>10000){
+                if(myGame.getScore()> GRANT_BALL_HOLDING_SCORE){
                     myBall.resetLocation();
                     myPaddle.resetLocation();
                     destroySecondaryBalls();
@@ -293,7 +294,7 @@ public class Level implements Screen{
             myGame.setCurrScreen(myGame.getLevel(3));
         }
         else if (code == KeyCode.U){
-            myGame.setScore(myGame.getScore()+10000);
+            myGame.setScore(myGame.getScore()+GRANT_BALL_HOLDING_SCORE);
         }
     }
 }

@@ -13,6 +13,7 @@ import java.util.Objects;
  * @author Muthu Arivoli
  */
 public class DisplayImage {
+    public static final int MINIMUM_Y_BOUND = 35;
     ImageView myImage;
 
     /**
@@ -96,7 +97,7 @@ public class DisplayImage {
 
     /**
      * A bound for the rectangular bounding box of the image
-     * @return
+     * @return the bounds for the rectangular bounding box
      */
     public Bounds getBounds(){
         return myImage.getBoundsInParent();
@@ -147,7 +148,7 @@ public class DisplayImage {
      * @return whether the image is within the y bounds
      */
     public boolean inYBounds(){
-        return (getBounds().getMinY()>35 && getBounds().getMaxY()<Game.LENGTH);
+        return (getBounds().getMinY()> MINIMUM_Y_BOUND && getBounds().getMaxY()<Game.LENGTH);
     }
 
     /**

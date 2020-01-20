@@ -12,6 +12,7 @@ public class Paddle {
     public static final int PADDLE_WIDTH = 80;
     public static final int PADDLE_HEIGHT = Game.LENGTH -40;
     public static final String PADDLE_FILE = "paddle.gif";
+    public static final double PADDLE_START_X_LOCATION = Game.LENGTH / 2.0;
 
     private DisplayImage myPaddleImage = new DisplayImage(PADDLE_FILE);
     private double speed;
@@ -77,7 +78,7 @@ public class Paddle {
      * Resets the location of the paddle to be in the center of the screen, like at the start of the game
      */
     public void resetLocation(){
-        myPaddleImage.setX(Game.LENGTH / 2.0);
+        myPaddleImage.setX(PADDLE_START_X_LOCATION);
         myPaddleImage.setY(PADDLE_HEIGHT);
     }
 }

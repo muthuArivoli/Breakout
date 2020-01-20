@@ -22,10 +22,10 @@ public class PowerupBrick extends SpecialBrick {
         this.myPowerup = myPowerup;
     }
 
-    @Override
     /**
      * Removes the brick from the display and starts dropping the powerup
      */
+    @Override
     public void destroy(Group root){
         super.destroy(root);
         myPowerup.startMoving(root);

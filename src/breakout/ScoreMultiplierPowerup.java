@@ -22,21 +22,21 @@ public class ScoreMultiplierPowerup extends Powerup {
         this.myScoreMultiplier = myScoreMultiplier;
     }
 
-    @Override
     /**
      * Activates the powerup by multiplying the score muliplier by 2, thus doubling any points gained and sets the time
      * to expire.
      */
+    @Override
     public void activatePowerup() {
         myScoreMultiplier.setValue(myScoreMultiplier.getValue() * 2);
         setTimeToExpire(POWERUP_TIME);
     }
 
-    @Override
     /**
      * Deactivates the powerup by dividing the score mulitplier by 2, thus returning the score multiplier back to its
      * original state before the powerup was activated.
      */
+    @Override
     public void deactivatePowerup() {
         myScoreMultiplier.setValue(myScoreMultiplier.getValue()/2);
     }

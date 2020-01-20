@@ -11,9 +11,11 @@ import javafx.scene.text.Text;
  */
 public class LoseScreen implements Screen {
 
+    public static final double LOSE_TEXT_X_POSITION = Game.LENGTH / 2.0 - 50;
+    public static final int LOSE_TEXT_Y_POSITION = 250;
     private Game myGame;
     private Scorebar myScorebar;
-    private Text myText = new Text(Game.LENGTH / 2.0-50,250,"");
+    private Text myText = new Text(LOSE_TEXT_X_POSITION, LOSE_TEXT_Y_POSITION,"");
 
     /**
      * Creates the screen that will be displayed when the user loses the game

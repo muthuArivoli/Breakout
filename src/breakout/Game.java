@@ -33,7 +33,7 @@ public class Game extends Application {
 
     /**
      * Launch the game
-     * @param args
+     * @param args used to launch the game
      */
     public static void main (String[] args){launch(args);}
 
@@ -42,8 +42,6 @@ public class Game extends Application {
      */
     @Override
     public void start (Stage stage) {
-        score=0;
-        lives=3;
         myScene = new Scene(root, LENGTH, LENGTH, BACKGROUND);
         setCurrScreen(new SplashScreen(this));
         stage.setScene(myScene);

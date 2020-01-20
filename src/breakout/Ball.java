@@ -9,6 +9,8 @@ import javafx.scene.Group;
 public class Ball {
     public static final double START_X_VELOCITY = 250;
     public static final double START_Y_VELOCITY = -300;
+    public static final double START_X_POSITION = Game.LENGTH / 2.0+Paddle.PADDLE_WIDTH / 2.0-10;
+    public static final double START_Y_POSITION = Paddle.PADDLE_HEIGHT-20;
     public static final String BALL_FILE = "ball.gif";
 
     private double xVelocity;
@@ -71,8 +73,8 @@ public class Ball {
      * Resets the location of the ball to be right above the paddle in the center of the screen, like at the start of the game
      */
     public void resetLocation(){
-        myBallImage.setX(Game.LENGTH / 2.0+Paddle.PADDLE_WIDTH / 2.0-10);
-        myBallImage.setY(Paddle.PADDLE_HEIGHT-20);
+        myBallImage.setX(START_X_POSITION);
+        myBallImage.setY(START_Y_POSITION);
         xVelocity = Paddle.PADDLE_SPEED;
         isCoupledWithPaddle = true;
     }

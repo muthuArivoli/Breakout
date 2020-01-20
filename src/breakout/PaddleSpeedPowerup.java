@@ -23,10 +23,10 @@ public class PaddleSpeedPowerup extends Powerup{
         this.myPaddle = myPaddle;
     }
 
-    @Override
     /**
      * Activates the powerup by speeding up the movement of the paddle by SPEED_FACTOR and sets the time to expire.
      */
+    @Override
     public void activatePowerup() {
         myPaddle.setSpeed(SPEED_FACTOR*myPaddle.getSpeed());
         setTimeToExpire(POWERUP_TIME);

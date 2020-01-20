@@ -23,20 +23,20 @@ public class PaddleLengthPowerup extends Powerup{
         this.myPaddle = myPaddle;
     }
 
-    @Override
     /**
      * Activate the powerup by increasing the length of the paddle by STRETCH_FACTOR and sets the time to expire.
      */
+    @Override
     public void activatePowerup() {
         myPaddle.stretch(STRETCH_FACTOR);
         setTimeToExpire(POWERUP_TIME);
     }
 
-    @Override
     /**
      * Deactivates the powerup by reducing the length of the paddle by SIZE_FACTOR, this returning the paddle to its
      * length before the powerup was activated.
      */
+    @Override
     public void deactivatePowerup() {
         myPaddle.stretch(1/STRETCH_FACTOR);
     }

@@ -10,7 +10,10 @@ import javafx.scene.text.Text;
  * @author Muthu Arivoli
  */
 public class Scorebar {
-    private Text myDisplay = new Text(Game.LENGTH / 2.0-50,30,"");
+    public static final double SCOREBAR_X_POSITION = Game.LENGTH / 2.0 - 50;
+    public static final int SCOREBAR_Y_POSITION = 30;
+    public static final int START_Y = 35;
+    private Text myDisplay = new Text(SCOREBAR_X_POSITION, SCOREBAR_Y_POSITION,"");
 
     /**
      * Constructs the scorebar that displays the score at the top of the screen
@@ -18,7 +21,7 @@ public class Scorebar {
      */
     public Scorebar(Group root){
         root.getChildren().add(myDisplay);
-        Line myBarrier = new Line(0, 35, Game.WIDTH, 35);
+        Line myBarrier = new Line(0, START_Y, Game.WIDTH, START_Y);
         root.getChildren().add(myBarrier);
     }
 

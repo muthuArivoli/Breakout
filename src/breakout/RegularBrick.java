@@ -9,6 +9,8 @@ import javafx.scene.Group;
  */
 public class RegularBrick implements Brick {
     public static final String REG_BRICK_FILE = "brick1.gif";
+    public static final int BRICK_HEIGHT = 19;
+    public static final int BRICK_OFFSET = 80;
 
     private DisplayImage myBrickImage;
     private int hitsToBreak;
@@ -24,7 +26,7 @@ public class RegularBrick implements Brick {
     public RegularBrick(String file_name, double xpos, double ypos, double width, Group root){
         myBrickImage = new DisplayImage(file_name);
         myBrickImage.setFitWidth(Game.LENGTH /width-1);
-        myBrickImage.setFitHeight(19);
+        myBrickImage.setFitHeight(BRICK_HEIGHT);
         myBrickImage.setX(xpos);
         myBrickImage.setY(ypos);
         myBrickImage.addImage(root);

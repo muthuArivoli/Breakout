@@ -11,6 +11,8 @@ import javafx.scene.text.Text;
  * @author Muthu Arivoli
  */
 public class SplashScreen implements Screen {
+    public static final int TEXT_X_POSITION = 50;
+    public static final int TEXT_Y_POSITION = 100;
     private Game myGame;
     Text myText;
     /**
@@ -52,7 +54,9 @@ public class SplashScreen implements Screen {
      */
     @Override
     public void initialize(Group root) {
-        myText = new Text(50,100,"");
+        myGame.setScore(0);
+        myGame.setLives(3);
+        myText = new Text(TEXT_X_POSITION, TEXT_Y_POSITION,"");
         root.getChildren().add(myText);
     }
 

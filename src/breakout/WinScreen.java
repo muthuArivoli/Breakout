@@ -10,9 +10,11 @@ import javafx.scene.text.Text;
  * @author Muthu Arivoli
  */
 public class WinScreen implements Screen {
+    public static final double WIN_TEXT_X_POSITION = Game.LENGTH / 2.0 - 50;
+    public static final int WIN_TEXT_Y_POSITION = 250;
     private Game myGame;
     private Scorebar myScorebar;
-    private Text myText = new Text(Game.LENGTH / 2.0-50,250,"");
+    private Text myText = new Text(WIN_TEXT_X_POSITION, WIN_TEXT_Y_POSITION,"");
 
     /**
      * Creates the screen that will be displayed when the user wins the game

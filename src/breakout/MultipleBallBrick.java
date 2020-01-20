@@ -22,10 +22,11 @@ public class MultipleBallBrick extends SpecialBrick {
         this.mySecondaryBall = mySecondaryBall;
     }
 
-    @Override
+
     /**
      * Removes the brick from the display and adds the ball that is being released to the display and releases it.
      */
+    @Override
     public void destroy(Group root) {
         mySecondaryBall.setInPlay(true);
         mySecondaryBall.getMyBallImage().setX(this.getMyBrickImage().getX());

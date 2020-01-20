@@ -23,21 +23,22 @@ public class BallSpeedPowerup extends Powerup{
         this.myBall = myBall;
     }
 
-    @Override
+
     /**
      * Activate the powerup by slowing the ball down by BALL_SPEED_FACTOR and sets the time to expire.
      */
+    @Override
     public void activatePowerup() {
         myBall.setxVelocity(myBall.getxVelocity()/BALL_SPEED_FACTOR);
         myBall.setyVelocity(myBall.getyVelocity()/BALL_SPEED_FACTOR);
         setTimeToExpire(POWERUP_TIME);
     }
 
-    @Override
     /**
      * Deactivates the powerup by speeding the ball up by BALL_SPEED_FACTOR, thus returning it back to its original speed
      * before the powerup was activated
      */
+    @Override
     public void deactivatePowerup() {
         myBall.setxVelocity(myBall.getxVelocity()*BALL_SPEED_FACTOR);
         myBall.setyVelocity(myBall.getyVelocity()*BALL_SPEED_FACTOR);

@@ -12,8 +12,16 @@ public class Pinball {
     public static final int PINBALL_SPEED = 15;
     public static final int PINBALL_WIDTH = 40;
     public static final int PINBALL_HEIGHT = 10;
+    public static final double PINBALL_START_Y_POSITION = Game.WIDTH-150;
+    public static final double LEFT_PINBALL_START_X_POSITION = 0;
+    public static final double RIGHT_PINBALL_START_X_POSITION = Game.LENGTH - PINBALL_WIDTH;
     public static final String LEFT_PINBALL_FILE = "paddle.gif";
     public static final String RIGHT_PINBALL_FILE = "paddle.gif";
+    public static final int LEFT_PINBALL_MAX_FINAL_UP_ANGLE = -90;
+    public static final int RIGHT_PINBALL_MAX_FINAL_UP_ANGLE = 90;
+    public static final int LEFT_PINBALL_MAX_FINAL_DOWN_ANGLE = 75;
+    public static final int RIGHT_PINBALL_MAX_FINAL_DOWN_ANGLE = -75;
+    public static final double PINBALL_Y_PIVOT_POSITION = Game.LENGTH - 150;
 
     private DisplayImage myLeftPinballImage = new DisplayImage(LEFT_PINBALL_FILE);
     private DisplayImage myRightPinballImage = new DisplayImage(RIGHT_PINBALL_FILE);
@@ -26,16 +34,16 @@ public class Pinball {
      * @param root Group that contains the elements that are currently being displayed on the screen
      */
     public Pinball(Group root){
-        initialize(myLeftPinballImage,root,0,Game.WIDTH-150);
-        initialize(myRightPinballImage,root, Game.LENGTH - PINBALL_WIDTH,Game.WIDTH-150);
+        initialize(myLeftPinballImage,root,LEFT_PINBALL_START_X_POSITION,PINBALL_START_Y_POSITION);
+        initialize(myRightPinballImage,root, RIGHT_PINBALL_START_X_POSITION,PINBALL_START_Y_POSITION);
         speed = PINBALL_SPEED;
         leftRotation = new Rotate();
-        leftRotation.setPivotX(0);//Set the Pivot's X to be the same location as the Circle's X.
-        leftRotation.setPivotY(Game.LENGTH - 150);//Set the Pivot's Y to be the same location as the Circle's Y
+        leftRotation.setPivotX(LEFT_PINBALL_START_X_POSITION);
+        leftRotation.setPivotY(PINBALL_Y_PIVOT_POSITION);
         myLeftPinballImage.addTransform(leftRotation);
         rightRotation = new Rotate();
-        rightRotation.setPivotX(Game.LENGTH );//Set the Pivot's X to be the same location as the Circle's X.
-        rightRotation.setPivotY(Game.LENGTH - 150);//Set the Pivot's Y to be the same location as the Circle's Y.
+        rightRotation.setPivotX(Game.LENGTH);
+        rightRotation.setPivotY(PINBALL_Y_PIVOT_POSITION);
         myRightPinballImage.addTransform(rightRotation);
         resetLocation();
     }
@@ -52,16 +60,16 @@ public class Pinball {
      * Moves the pinball strikers upward simultaneously
      */
     public void moveUp(){
-        leftRotation.setAngle(Math.max(-90,leftRotation.getAngle() - speed));
-        rightRotation.setAngle(Math.min(90,rightRotation.getAngle() + speed));
+        leftRotation.setAngle(Math.max(LEFT_PINBALL_MAX_FINAL_UP_ANGLE,leftRotation.getAngle() - speed));
+        rightRotation.setAngle(Math.min(RIGHT_PINBALL_MAX_FINAL_UP_ANGLE,rightRotation.getAngle() + speed));
     }
 
     /**
      * Moves the pinball strikers downward simultaneously
      */
     public void moveDown(){
-        leftRotation.setAngle(Math.min(75,leftRotation.getAngle() + speed));
-        rightRotation.setAngle(Math.max(-75,rightRotation.getAngle() - speed));
+        leftRotation.setAngle(Math.min(LEFT_PINBALL_MAX_FINAL_DOWN_ANGLE,leftRotation.getAngle() + speed));
+        rightRotation.setAngle(Math.max(RIGHT_PINBALL_MAX_FINAL_DOWN_ANGLE,rightRotation.getAngle() - speed));
     }
 
     /**

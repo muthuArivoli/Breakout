@@ -2,6 +2,7 @@ package breakout;
 
 /**
  * This represents a powerup that increases the paddle speed for a short amount of time.
+ * Depends on Powerup and Paddle
  * @author Muthu Arivoli
  */
 public class PaddleSpeedPowerup extends Powerup{

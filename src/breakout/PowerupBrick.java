@@ -4,6 +4,7 @@ import javafx.scene.Group;
 
 /**
  * This represents a special brick that contains a powerup that is hidden inside and released once the brick is broken.
+ * Depends on SpecialBrick
  * @author Muthu Arivoli
  */
 public class PowerupBrick extends SpecialBrick {

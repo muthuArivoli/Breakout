@@ -3,7 +3,7 @@ package breakout;
 import javafx.scene.Group;
 
 /**
- * This represents a ball in the game that the player will try to manipulate to break blocks.
+ * This represents a ball in the game that the player will try to manipulate to break blocks. Depends on DisplayImage.
  * @author Muthu Arivoli
  */
 public class Ball {

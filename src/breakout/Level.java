@@ -12,6 +12,7 @@ import java.util.Scanner;
 /**
  * This represents a level in the game. The level is read in from an input file and then handles all interactions
  * between objects present in the level.
+ * Depends on Game, Paddle, Brick, Powerup, Ball, Scoremultiplier, Scorebar, and Pinball.
  * @author  Muthu Arivoli
  */
 public class Level implements Screen{

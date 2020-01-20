@@ -2,7 +2,7 @@ package breakout;
 
 /**
  * This represents a powerup that will multiply any points that are gained by 2 for a short period of time after
- * activation
+ * activation. Depends on ScoreMultiplier and Powerup.
  * @author Muthu Arivoli
  */
 public class ScoreMultiplierPowerup extends Powerup {

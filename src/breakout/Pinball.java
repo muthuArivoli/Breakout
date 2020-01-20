@@ -5,6 +5,7 @@ import javafx.scene.transform.Rotate;
 
 /**
  * A pinball striker that is placed on the side of the screen as another tool to hit the ball.
+ * Depends on DisplayImage
  * @author Muthu Arivoli
  */
 public class Pinball {

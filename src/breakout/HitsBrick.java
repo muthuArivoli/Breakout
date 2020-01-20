@@ -2,6 +2,7 @@ package breakout;
 
 /**
  * This represents a brick that takes 2 more hits to break than the original brick.
+ * Depends on SpecialBrick and Brick.
  * @author Muthu Arivoli
  */
 public class HitsBrick extends SpecialBrick {

@@ -6,6 +6,7 @@ import javafx.scene.text.Text;
 
 /**
  * This represents the screen that will be displayed when the player loses the game.
+ * Depends on Game and Scorebar
  * @author Muthu Arivoli
  */
 public class LoseScreen implements Screen {

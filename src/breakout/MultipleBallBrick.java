@@ -3,7 +3,8 @@ package breakout;
 import javafx.scene.Group;
 
 /**
- * This represents a brick that releases a ball once the brick is broken
+ * This represents a brick that releases a ball once the brick is broken.
+ * Depends on Ball and SpecialBrick.
  * @author Muthu Arivoli
  */
 public class MultipleBallBrick extends SpecialBrick {

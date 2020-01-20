@@ -4,6 +4,7 @@ import javafx.scene.Group;
 
 /**
  * This represents the paddle that the player will control to prevent the ball from going out of bounds.
+ * Depends on DisplayImage
  * @author Muthu Arivoli
  */
 public class Paddle {

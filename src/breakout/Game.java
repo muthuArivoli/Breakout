@@ -12,6 +12,7 @@ import javafx.util.Duration;
 
 /**
  * The main driver code that initializes the game loop and sets the current screen in the game.
+ * Depends on Screen.
  * @author Muthu Arivoli
  */
 public class Game extends Application {

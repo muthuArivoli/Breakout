@@ -1,7 +1,8 @@
 package breakout;
 
 /**
- * This represents a powerup that temporarily slows down the main (initial) ball for a short amount of time.
+ * This represents a powerup that temporarily slows down the main (initial) ball for a short amount of time. Depends on
+ * Ball and Powerup
  * @author Muthu Arivoli
  */
 public class BallSpeedPowerup extends Powerup{

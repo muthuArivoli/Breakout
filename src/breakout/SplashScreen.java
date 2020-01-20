@@ -8,6 +8,7 @@ import javafx.scene.text.Text;
  * This represents the screen that will be initially displayed to the user that includes the instructions of play.
  * The user pressing any key will then start the first level.
  * Depends on Game
+ * @author Muthu Arivoli
  */
 public class SplashScreen implements Screen {
     private Game myGame;

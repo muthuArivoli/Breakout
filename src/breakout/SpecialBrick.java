@@ -4,6 +4,7 @@ import javafx.scene.Group;
 
 /**
  * Represents the overall methods that any special block will have.
+ * Depends on Brick
  * @author Muthu Arivoli
  */
 public abstract class SpecialBrick implements Brick {

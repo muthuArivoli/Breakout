@@ -2,6 +2,7 @@ package breakout;
 
 /**
  * This represents a powerup that increases the length of the paddle for a short amount of time.
+ * Depends on Paddle and Powerup.
  * @author Muthu Arivoli
  */
 public class PaddleLengthPowerup extends Powerup{

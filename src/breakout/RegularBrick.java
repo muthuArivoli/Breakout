@@ -4,6 +4,7 @@ import javafx.scene.Group;
 
 /**
  * This represents the most common type of brick that is worth 10 points and takes 1 hit to break.
+ * Depends on Brick
  * @author Muthu Arivoli
  */
 public class RegularBrick implements Brick {

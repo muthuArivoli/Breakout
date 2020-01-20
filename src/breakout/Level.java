@@ -236,7 +236,7 @@ public class Level implements Screen{
     private void handleChangeLevel(){
         if(myBricks.isEmpty()){
             if(myLevel != Game.NUM_LEVELS) {
-                System.out.println(myLevel);
+                myGame.setCurrScreen(myGame.getLevel(myLevel+1));
             }
             else{
                 myGame.setCurrScreen(new WinScreen(myGame));

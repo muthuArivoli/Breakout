@@ -1,5 +1,6 @@
-package breakout;
+package displayImage;
 
+import breakout.Game;
 import javafx.scene.Group;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;

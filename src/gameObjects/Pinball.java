@@ -1,5 +1,7 @@
-package breakout;
+package gameObjects;
 
+import breakout.Game;
+import displayImage.DisplayImage;
 import javafx.scene.Group;
 import javafx.scene.transform.Rotate;
 

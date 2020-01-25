@@ -1,4 +1,4 @@
-package breakout;
+package screen;
 
 import javafx.scene.Group;
 import javafx.scene.input.KeyCode;

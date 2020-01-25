@@ -1,6 +1,8 @@
-package breakout;
+package brick;
 
+import gameObjects.Ball;
 import javafx.scene.Group;
+import powerup.Powerup;
 
 /**
  * A utility class that is used to create the various types of blocks in the game based on the input from the level file.

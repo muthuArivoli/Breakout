@@ -1,5 +1,7 @@
-package breakout;
+package gameObjects;
 
+import breakout.Game;
+import displayImage.DisplayImage;
 import javafx.scene.Group;
 
 /**
@@ -9,7 +11,7 @@ import javafx.scene.Group;
 public class Ball {
     public static final double START_X_VELOCITY = 250;
     public static final double START_Y_VELOCITY = -300;
-    public static final double START_X_POSITION = Game.LENGTH / 2.0+Paddle.PADDLE_WIDTH / 2.0-10;
+    public static final double START_X_POSITION = Game.LENGTH / 2.0+ Paddle.PADDLE_WIDTH / 2.0-10;
     public static final double START_Y_POSITION = Paddle.PADDLE_HEIGHT-20;
     public static final String BALL_FILE = "ball.gif";
 

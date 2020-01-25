@@ -1,9 +1,20 @@
 package breakout;
 
+import brick.BlockCreator;
+import brick.Brick;
+import brick.RegularBrick;
+import displayImage.Scorebar;
+import gameObjects.Ball;
+import gameObjects.Paddle;
+import gameObjects.Pinball;
+import gameObjects.ScoreMultiplier;
 import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
+import powerup.*;
+import screen.LoseScreen;
+import screen.Screen;
+import screen.WinScreen;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,7 +27,7 @@ import java.util.Scanner;
  * Depends on Game, Paddle, Brick, Powerup, Ball, Scoremultiplier, Scorebar, and Pinball.
  * @author  Muthu Arivoli
  */
-public class Level implements Screen{
+public class Level implements Screen {
     public static final int GRANT_BALL_HOLDING_SCORE = 10000;
     private Game myGame;
     private String inputFile;
@@ -55,7 +66,7 @@ public class Level implements Screen{
         myScorebar = new Scorebar(root);
         myPinball = new Pinball(root);
         try {
-            InputStream is = getClass().getResourceAsStream("/level"+myLevel+".txt");
+            InputStream is = getClass().getResourceAsStream(inputFile);
             Scanner f = new Scanner(is);
             int r,c;
             r = f.nextInt();
@@ -137,6 +148,7 @@ public class Level implements Screen{
         while(itr.hasNext()){
             Powerup activePowerup = itr.next();
             activePowerup.setTimeToExpire(activePowerup.getTimeToExpire() - elapsedTime);
+            System.out.println(activePowerup.getTimeToExpire() - elapsedTime);
             if(activePowerup.getTimeToExpire()<=0){
                 activePowerup.deactivatePowerup();
                 itr.remove();

@@ -1,5 +1,6 @@
-package breakout;
+package brick;
 
+import gameObjects.Ball;
 import javafx.scene.Group;
 
 /**

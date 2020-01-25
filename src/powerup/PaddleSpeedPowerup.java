@@ -1,11 +1,13 @@
-package breakout;
+package powerup;
+
+import gameObjects.Paddle;
 
 /**
  * This represents a powerup that increases the paddle speed for a short amount of time.
  * Depends on Powerup and Paddle
  * @author Muthu Arivoli
  */
-public class PaddleSpeedPowerup extends Powerup{
+public class PaddleSpeedPowerup extends Powerup {
     public static final String BALL_SPEED_FILE = "laserpower.gif";
     public static final double SPEED_FACTOR = 2.0;
 
@@ -29,7 +31,6 @@ public class PaddleSpeedPowerup extends Powerup{
     @Override
     public void activatePowerup() {
         myPaddle.setSpeed(SPEED_FACTOR*myPaddle.getSpeed());
-        setTimeToExpire(POWERUP_TIME);
     }
 
     @Override

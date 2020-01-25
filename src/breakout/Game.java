@@ -9,6 +9,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import screen.Screen;
+import screen.SplashScreen;
 
 /**
  * The main driver code that initializes the game loop and sets the current screen in the game.
@@ -72,7 +74,7 @@ public class Game extends Application {
      * @return the instance of the new level
      */
     public Screen getLevel(int level){
-        return new Level(this,"level"+level+".txt", level);
+        return new Level(this,"/level"+level+".txt", level);
     }
 
     /**

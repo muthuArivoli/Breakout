@@ -1,5 +1,7 @@
-package breakout;
+package powerup;
 
+import displayImage.DisplayImage;
+import breakout.Game;
 import javafx.scene.Group;
 
 /**
@@ -31,6 +33,7 @@ public abstract class Powerup {
         myPowerupImage.setFitHeight(POWERUP_HEIGHT);
         myPowerupImage.setX(xpos);
         myPowerupImage.setY(ypos);
+        setTimeToExpire(POWERUP_TIME);
     }
 
     /**

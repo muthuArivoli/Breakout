@@ -1,5 +1,6 @@
-package breakout;
+package screen;
 
+import breakout.Game;
 import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;

@@ -1,5 +1,7 @@
-package breakout;
+package displayImage;
 
+import breakout.Game;
+import gameObjects.Paddle;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -132,7 +134,7 @@ public class DisplayImage {
      * @return whether the image is at the bottom of the screen
      */
     public boolean atBottom(){
-        return (getBounds().getMinY()>Paddle.PADDLE_HEIGHT);
+        return (getBounds().getMinY()> Paddle.PADDLE_HEIGHT);
     }
 
     /**
@@ -140,7 +142,7 @@ public class DisplayImage {
      * @return whether the image is within the x bounds
      */
     public boolean inXBounds(){
-        return (getBounds().getMinX()>0 && getBounds().getMaxX()<Game.LENGTH);
+        return (getBounds().getMinX()>0 && getBounds().getMaxX()< Game.LENGTH);
     }
 
     /**

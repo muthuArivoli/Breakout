@@ -1,5 +1,6 @@
-package breakout;
+package brick;
 
+import displayImage.DisplayImage;
 import javafx.scene.Group;
 
 /**

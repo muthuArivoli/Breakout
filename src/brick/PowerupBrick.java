@@ -1,6 +1,7 @@
-package breakout;
+package brick;
 
 import javafx.scene.Group;
+import powerup.Powerup;
 
 /**
  * This represents a special brick that contains a powerup that is hidden inside and released once the brick is broken.

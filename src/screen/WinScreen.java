@@ -1,27 +1,28 @@
-package breakout;
+package screen;
 
+import breakout.Game;
+import displayImage.Scorebar;
 import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 
 /**
- * This represents the screen that will be displayed when the player loses the game.
- * Depends on Game and Scorebar
+ * This represents the screen that will be displayed when the user wins the game.
+ * Depends on Game and Scorebar.
  * @author Muthu Arivoli
  */
-public class LoseScreen implements Screen {
-
-    public static final double LOSE_TEXT_X_POSITION = Game.LENGTH / 2.0 - 50;
-    public static final int LOSE_TEXT_Y_POSITION = 250;
+public class WinScreen implements Screen {
+    public static final double WIN_TEXT_X_POSITION = Game.LENGTH / 2.0 - 50;
+    public static final int WIN_TEXT_Y_POSITION = 250;
     private Game myGame;
     private Scorebar myScorebar;
-    private Text myText = new Text(LOSE_TEXT_X_POSITION, LOSE_TEXT_Y_POSITION,"");
+    private Text myText = new Text(WIN_TEXT_X_POSITION, WIN_TEXT_Y_POSITION,"");
 
     /**
-     * Creates the screen that will be displayed when the user loses the game
-     * @param myGame the game that has just been lost
+     * Creates the screen that will be displayed when the user wins the game
+     * @param myGame the game that has just been won
      */
-    public LoseScreen(Game myGame){
+    public WinScreen(Game myGame){
         this.myGame = myGame;
     }
 
@@ -32,11 +33,11 @@ public class LoseScreen implements Screen {
     @Override
     public void update(double elapsedTime) {
         myScorebar.setMyDisplay(myGame.getScore(),myGame.getLives());
-        myText.setText("You lost." + "\n with a score of: " + myGame.getScore());
+        myText.setText("YOU WON !!!" + "\n with a score of: " + myGame.getScore() + "\n and " + myGame.getLives() +" lives remaining");
     }
 
     /**
-     * Initialize the lost screen and add all relevant elements to the display including the text that will display the lost status.
+     * Initialize the win screen and add all relevant elements to the display including the text that will display the win status.
      * @param root Group that contains the elements that are currently being displayed on the screen
      */
     @Override

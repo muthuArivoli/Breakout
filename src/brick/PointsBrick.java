@@ -1,4 +1,4 @@
-package breakout;
+package brick;
 
 /**
  * This represents a block that is worth two times the number of points of the block that is given.

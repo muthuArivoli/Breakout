@@ -1,4 +1,6 @@
-package breakout;
+package powerup;
+
+import gameObjects.ScoreMultiplier;
 
 /**
  * This represents a powerup that will multiply any points that are gained by 2 for a short period of time after
@@ -29,7 +31,6 @@ public class ScoreMultiplierPowerup extends Powerup {
     @Override
     public void activatePowerup() {
         myScoreMultiplier.setValue(myScoreMultiplier.getValue() * 2);
-        setTimeToExpire(POWERUP_TIME);
     }
 
     /**

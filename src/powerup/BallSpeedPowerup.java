@@ -1,11 +1,13 @@
-package breakout;
+package powerup;
+
+import gameObjects.Ball;
 
 /**
  * This represents a powerup that temporarily slows down the main (initial) ball for a short amount of time. Depends on
  * Ball and Powerup
  * @author Muthu Arivoli
  */
-public class BallSpeedPowerup extends Powerup{
+public class BallSpeedPowerup extends Powerup {
     public static final double BALL_SPEED_FACTOR = 2.0;
     public static final String BALL_SPEED_FILE = "extraballpower.gif";
 
@@ -31,7 +33,6 @@ public class BallSpeedPowerup extends Powerup{
     public void activatePowerup() {
         myBall.setxVelocity(myBall.getxVelocity()/BALL_SPEED_FACTOR);
         myBall.setyVelocity(myBall.getyVelocity()/BALL_SPEED_FACTOR);
-        setTimeToExpire(POWERUP_TIME);
     }
 
     /**

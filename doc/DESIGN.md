@@ -11,7 +11,7 @@ Muthu Arivoli - Designed and wrote code for the entire project
 
 
 ## High-level Design
-The Game class has 4 different states for the dispay - the splash screen, a level screen, the win screen, or the lose screen. Each screen takes care of moving to the appropriate next screen based on its state and inputs from the player. The level contains all of the information required to play the level, including the interacting objects in the game (like the ball, paddle, and bricks), and reads its initial configuration from a txt file. Powerups and Bricks are both abstract, and specific types of each are implemented by subclasses that each modify a specific parameter of the superclass.     
+The Game class has 4 different states for the display - the splash screen, a level screen, the win screen, or the lose screen. Each screen takes care of moving to the appropriate next screen based on its state and inputs from the player. The level contains all of the information required to play the level, including the interacting objects in the game (like the ball, paddle, and bricks), and reads its initial configuration from a txt file. Powerups and Bricks are both abstract, and specific types of each are implemented by subclasses that each modify a specific parameter of the superclass.     
 #### Core Classes
 * Game
 * Level
